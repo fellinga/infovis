@@ -6,7 +6,7 @@
 function setup(rawData) {
     var nodeData = createNodes(rawData);
     
-    var vis = d3.select("#vis").append("svg")
+    var vis = d3.select("#barChart").append("svg")
         .attr("width", 960)
         .attr("height", 960);
     
