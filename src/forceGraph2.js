@@ -7,7 +7,11 @@ var maxLinkValue = 1;
 
 var shownNodes = null; //others are faded out
 
-const forceGraph = createForceGraph('#forceGraph')
+const forceGraph = createForceGraph('#forceGraph');
+
+//Toggle stores whether the highlighting is on
+var toggle = 0;
+var linkedByIndex = {};
 
 function getMaxLinkValue() {
   max = 1;
@@ -27,6 +31,25 @@ d3.json("graph_data_50.json", function(error, graph) {
   shownNodes = JSON.parse(JSON.stringify(data.nodes));
 
   maxLinkValue = getMaxLinkValue();
+
+  
+  
+
+  //Create an array logging what is connected to what
+  
+  dataRec.nodes.forEach(function (d) {
+    linkedByIndex[d.id + "," + d.id] = 1;
+  });
+  for (var i=0;i<dataRec.links.length; i++) {
+    if (dataRec.links[i].value > 50) {
+      linkedByIndex[dataRec.links[i].source + "," + dataRec.links[i].target] = 1;
+    }
+  }
+  // dataRec.links.forEach(function (d) {
+  //     if (d.value > 50) {
+  //       linkedByIndex[d.source + "," + d.target] = 1;
+  //     }
+  // });
 
 
   filterGraphByTag();
@@ -50,6 +73,7 @@ function createForceGraph(baseSelector) {
   const svg = d3.select(baseSelector).append('svg')
     .attr('width', dims.width + dims.margin*2)
     .attr('height', dims.height + dims.margin*2);
+    
 
     //create a root shifted element
   const root = svg.append('g').attr('transform', `translate(${dims.margin},${dims.margin})`);
@@ -67,11 +91,13 @@ function createForceGraph(baseSelector) {
   var simulation = d3.forceSimulation()
    .force("link", d3.forceLink().id(function(d) { return d.id; }))
    .force("charge", manyBody)
-   .force('collide', null)
+   .force('collide', collide)
    .force("center", d3.forceCenter(dims.width / 2, dims.height / 2));
 
 
   function update() {
+    svg.on('dbclick', setBack);
+    // NODES
 
     const nodes = root.select("g.nodes")
       .selectAll("g")
@@ -79,34 +105,20 @@ function createForceGraph(baseSelector) {
 
     const nodes_enter = nodes.enter().append('g')
       .attr('class', 'node')
-      .on('click', circleClicked)
+      .on('click', circleClicked)      
       .call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended));
 
-    console.log(shownNodes);
-    console.log(shownNodes.length);
-    console.log(dataRec);
-    console.log(data);
-
+    
+    // NODE CIRCLES
     nodes_enter.append('circle')
       .attr('r',(d) => Math.sqrt(d.count/10))
       .style('fill', 'gray')
-      .style('opacity', function (d) {
-        if (shownNodes.length <= 1) {
-            return 1;
-        } else {
-          if (shownNodes.indexOf(d.id) == -1) {
-            return 0;
-          }else{
-            return 1;
-          }          
-        }
-      });
+      .on('click', connectedNodes);
 
-
-
+    // NODE TEXT
     nodes_enter.append('text')
       .attr('dx', 10)
       .attr('dy', '.35em')
@@ -118,14 +130,16 @@ function createForceGraph(baseSelector) {
 
     nodes.exit().remove();
 
+
+    // LINKS
+
     const links = root.select("g.links")
       .selectAll("line")
       .data(data.links);
       
     const links_enter = links.enter().append("line")
-        .attr("stroke-width", function(d) { return Math.sqrt(Math.sqrt(d.value)); })
-        .attr('stroke', 'black')
-        .attr('stroke-opacity', function(d) { return 1 - d.value/maxLinkValue });
+        .attr("class", "link")
+        .attr("stroke-width", function(d) { return Math.sqrt(Math.sqrt(d.value)); });
 
     const links_update = links.merge(links_enter);
 
@@ -156,8 +170,26 @@ function createForceGraph(baseSelector) {
       //     .attr("cy", function(d) { return d.y; });
     }
 
+    function connectedNodes() {
+      
+      //Reduce the opacity of all but the neighbouring nodes
+      d = d3.select(this).node().__data__;
+      console.log(d);
+      nodes_update.style("opacity", function (o) {
+          return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.1;
+      }); 
+    }
 
-  }
+    function setBack() {
+
+      //Put them back to opacity=1
+      nodes_update.style("opacity", 1);
+      links_update.style("opacity", 1);
+      
+    }
+
+
+  
 
   function dragstarted(d) {
     if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -196,6 +228,9 @@ function createForceGraph(baseSelector) {
     // simulation.alphaTarget(0);
   }
 
+  
+}
+
 
   return update;
 }
@@ -213,6 +248,14 @@ function filterGraphByTag() {
     }
   }
 }
+
+
+//This function looks up whether a pair are neighbours  
+function neighboring(a, b) {
+    return linkedByIndex[a + "," + b];
+}
+
+
 
 
 
