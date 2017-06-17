@@ -63,6 +63,11 @@ function updateCharts() {
 
 
 function createForceGraph(baseSelector) {
+  // Define the div for the tooltip
+  var div = d3.select("body").append("div") 
+    .attr("class", "tooltip")       
+    .style("opacity", 0);
+
   const dims = {
     margin: 40,
     width: 1024,
@@ -97,6 +102,38 @@ function createForceGraph(baseSelector) {
 
   function update() {
     svg.on('dbclick', setBack);
+
+    // LINKS
+
+    const links = root.select("g.links")
+      .selectAll("line")
+      .data(data.links);
+      
+    const links_enter = links.enter().append("line")
+        .attr("class", "link")
+        .attr('opacity', 0.5)
+        .attr("stroke-width", function(d) { return Math.sqrt(d.value)/2; });
+
+    const links_update = links.merge(links_enter);
+    
+    // Tooltip
+    links_update
+      .on("mouseover", function(d) {    
+        div.transition()    
+          .duration(200)    
+          .style("opacity", .9);    
+        div .html(d.value)  
+          .style("left", (d3.event.pageX) + "px")   
+          .style("top", (d3.event.pageY - 28) + "px");  
+      })          
+      .on("mouseout", function(d) {   
+        div.transition()    
+          .duration(500)    
+          .style("opacity", 0)
+      });
+
+    links.exit().remove();
+
     // NODES
 
     const nodes = root.select("g.nodes")
@@ -105,7 +142,9 @@ function createForceGraph(baseSelector) {
 
     const nodes_enter = nodes.enter().append('g')
       .attr('class', 'node')
-      .on('click', circleClicked)      
+      .on('click', circleClicked)
+      .on('mouseenter', (d) => updateCharts())
+      .on('mouseleave', (d) => updateCharts())      
       .call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -118,6 +157,7 @@ function createForceGraph(baseSelector) {
       .style('fill', 'gray')
       .on('click', connectedNodes);
 
+
     // NODE TEXT
     nodes_enter.append('text')
       .attr('dx', 10)
@@ -127,23 +167,22 @@ function createForceGraph(baseSelector) {
       .style('fill', 'black');
 
     const nodes_update = nodes.merge(nodes_enter);
+    // nodes_update.classed('selected', (d) => d === selectedTag);
+    nodes_update.selectAll('circle')
+      .style('fill', (d) => 
+        d.id === selectedTag ? 'orange' : 'gray'
+      )
+      .on('mouseenter', function() {
+        d3.select(this).style('fill', 'aliceblue').style('stroke','gray');
+      })
+      .on('mouseleave', function() {
+        d3.select(this).style('fill', (d) => d.id === selectedTag ? 'orange' : 'gray').style('stroke',null);
+      });
 
     nodes.exit().remove();
 
 
-    // LINKS
-
-    const links = root.select("g.links")
-      .selectAll("line")
-      .data(data.links);
-      
-    const links_enter = links.enter().append("line")
-        .attr("class", "link")
-        .attr("stroke-width", function(d) { return Math.sqrt(Math.sqrt(d.value)); });
-
-    const links_update = links.merge(links_enter);
-
-    links.exit().remove();
+    
 
     simulation
         .force("link")
@@ -174,14 +213,12 @@ function createForceGraph(baseSelector) {
       
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(this).node().__data__;
-      console.log(d);
       nodes_update.style("opacity", function (o) {
           return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.1;
       }); 
     }
 
     function setBack() {
-
       //Put them back to opacity=1
       nodes_update.style("opacity", 1);
       links_update.style("opacity", 1);
