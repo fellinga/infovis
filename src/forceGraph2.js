@@ -115,7 +115,6 @@ function createForceGraph(baseSelector) {
     // NODE CIRCLES
     nodes_enter.append('circle')
       .attr('r',(d) => Math.sqrt(d.count/10))
-      .style('fill', 'gray')
       .on('click', connectedNodes);
 
     // NODE TEXT
