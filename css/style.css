@@ -27,6 +27,13 @@ main {
 	background-color:#507A87;
 	padding: 64px 1% 0 2%;
 }
+@media (min-width: 1900px) {
+    section {
+        display: inline-block;
+        margin: 0 40 0 40;
+        width: 45%;
+    }
+}
 button {
     color: black;
     height: 30px;
