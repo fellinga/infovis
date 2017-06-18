@@ -1,3 +1,44 @@
+body {
+    margin:0;
+}
+header {
+    height: 64px;
+    width: 100%;
+    position:fixed;
+}
+footer {
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+    font-size: 16px;
+}
+header,footer {
+    background-color:#333;
+    color: #aaa;
+}
+#title {
+    float: left;
+    line-height: 64px;
+    font-size: 22px;
+    padding: 0 2%;
+}
+main {
+    padding: 64px 1% 0 2%;
+	background-color:#507A87;
+	padding: 64px 1% 0 2%;
+}
+button {
+    color: black;
+    height: 30px;
+    line-height: 30px;
+    background-color: greenyellow;
+    border: none;
+}
+button:hover {
+    color: red;
+}
+
+/* chart relevant code starts here */
 .node text {
   	font: 15px helvetica;
 }
