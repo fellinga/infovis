@@ -17,27 +17,23 @@
 		</div>
 	</header>
 	<main>
-		<section id="btnBar">
+        <section class="chartSection">
+            <h3>Force Graph</h3>
+            
+            <div id="forceGraph"></div>
+        </section>
+		<section class="chartSection">
+        	<h3>Bar Chart</h3>
+			<div id="btnBar">
+			<button onclick="countBtn()"> Count </button>
 			<button onclick="commentBtn()"> Comments </button>
 			<button onclick="answerBtn()"> Answers </button>
 			<button onclick="favoriteBtn()"> Favorites </button>
 			<button onclick="scoreBtn()"> Score </button>
 			<button onclick="viewBtn()"> Views </button>
-		</section>
-        <section class="chartSection">
-            <h3>Force Graph</h3>
-            
-            <div id="forceGraph">></div>
-        </section>
-        <section class="chartSection">
-        	<h3>Bar Chart</h3>
+			</div>
 
         	<div id="barChart"></div>
-        </section>
-        <section class="chartSection">
-        	<h3>Pie Chart</h3>
-
-        	<div id="pieChart"></div>
         </section>
     </main>
 
@@ -50,7 +46,6 @@
 	<script type="text/javascript" src="lib/d3.js" ></script>
 	<script type="text/javascript" src="src/barChart.js" ></script>
 	<script type="text/javascript" src="src/forceGraph2.js" ></script>
-    <script type="text/javascript" src="src/pieChart.js" ></script>
 
 </body>
 </html>
