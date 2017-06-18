@@ -42,3 +42,12 @@ button:hover {
 .node text {
   	font: 15px helvetica;
 }
+circle {
+    fill: greenyellow;
+}
+.bar {
+    fill: greenyellow;
+}
+.bar:hover {
+    fill: red;
+}
