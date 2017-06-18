@@ -11,36 +11,40 @@
 </head>
 
 <body>
-    <h1>SS2017 InfoVis Project</h1>
-    <main>
-		<section>
-			<button onClick="commentBtn()"> Comments </button>
-			<button onClick="answerBtn()"> Answers </button>
-			<button onClick="favoriteBtn()"> Favorites </button>
-			<button onClick="scoreBtn()"> Score </button>
-			<button onClick="viewBtn()"> Views </button>
+	<header>
+		<div id="title">
+			SS2017 InfoVis Project
+		</div>
+	</header>
+	<main>
+		<section id="btnBar">
+			<button onclick="commentBtn()"> Comments </button>
+			<button onclick="answerBtn()"> Answers </button>
+			<button onclick="favoriteBtn()"> Favorites </button>
+			<button onclick="scoreBtn()"> Score </button>
+			<button onclick="viewBtn()"> Views </button>
 		</section>
-        <section>
+        <section class="chartSection">
             <h3>Force Graph</h3>
             
-            <div id="forceGraph"></div>
+            <div id="forceGraph">></div>
         </section>
-        <section>
+        <section class="chartSection">
         	<h3>Bar Chart</h3>
 
         	<div id="barChart"></div>
         </section>
-        <section>
+        <section class="chartSection">
         	<h3>Pie Chart</h3>
 
         	<div id="pieChart"></div>
         </section>
     </main>
 
-    <div class="footer">
-    	<p>A infovis project</p>
-    	<p><a href="https://github.com/fellinga/infovis">Code</a></p>
-    </div>
+	<footer>
+    	a infovis project by Patrick Mörtenböck &amp; Mario Fellinger.
+		visit us @ <a href="https://github.com/fellinga/infovis" target="_blank"> github </a>
+    </footer>
 
 	<!-- JAVASCRIPT -->
 	<script type="text/javascript" src="lib/d3.js" ></script>
