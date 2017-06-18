@@ -2,8 +2,8 @@ var jsondata;
 
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 20, bottom: 100, left: 55},
-    width = 1000 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 950 - margin.left - margin.right,
+    height = 750 - margin.top - margin.bottom;
 
 // set the ranges
 var x = d3.scaleBand()

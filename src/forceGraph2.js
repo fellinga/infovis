@@ -64,10 +64,10 @@ function updateCharts() {
 
 function createForceGraph(baseSelector) {
   const dims = {
-    margin: 40,
-    width: 1024,
-    height: 700,
-    radius: 70
+    margin: 0,
+    width: 850,
+    height: 750,
+    radius: 20
     };
 
   const svg = d3.select(baseSelector).append('svg')
