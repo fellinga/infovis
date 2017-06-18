@@ -9,36 +9,44 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
 </head>
+
 <body>
+    <h1>SS2017 InfoVis Project</h1>
+    <main>
+		<section>
+			<button onClick="commentBtn()"> Comments </button>
+			<button onClick="answerBtn()"> Answers </button>
+			<button onClick="favoriteBtn()"> Favorites </button>
+			<button onClick="scoreBtn()"> Score </button>
+			<button onClick="viewBtn()"> Views </button>
+		</section>
+        <section>
+            <h3>Force Graph</h3>
+            
+            <div id="forceGraph"></div>
+        </section>
+        <section>
+        	<h3>Bar Chart</h3>
 
-	<div class="container">
-		
-		<h1>SS2017 InfoVis Project</h1>
+        	<div id="barChart"></div>
+        </section>
+        <section>
+        	<h3>Pie Chart</h3>
 
-		<div id="vis">
-			<section>
-				<h3>Bar Chart</h3>
-				<div id="barChart"></div>
-			</section>
-			<section>
-				<h3>Pie Chart</h3>
-				<div id="pieChart"></div>
-			</section>
+        	<div id="pieChart"></div>
+        </section>
+    </main>
 
-		</div>
-
-    	<div class="footer">
-      		<p>A infovis project</p>
-     		<p><a href="https://github.com/fellinga/infovis">Code</a></p>
-    	</div>
-
-	</div>
+    <div class="footer">
+    	<p>A infovis project</p>
+    	<p><a href="https://github.com/fellinga/infovis">Code</a></p>
+    </div>
 
 	<!-- JAVASCRIPT -->
 	<script type="text/javascript" src="lib/d3.js" ></script>
-	<script type="text/javascript" src="src/chart.js" ></script>
-	<script type="text/javascript" src="src/pie.js" ></script>
-
+	<script type="text/javascript" src="src/barChart.js" ></script>
+	<script type="text/javascript" src="src/forceGraph2.js" ></script>
+    <script type="text/javascript" src="src/pieChart.js" ></script>
 
 </body>
 </html>
