@@ -53,11 +53,12 @@ button:hover {
 .link {
     stroke: #ccc;
 }
-circle {
+circle,.bar {
     fill: greenyellow;
 }
 circle.selected {
     fill: orange;
+    cursor: pointer;
 }
 circle:hover {
     fill: aliceblue;
