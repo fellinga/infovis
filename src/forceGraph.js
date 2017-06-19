@@ -187,6 +187,14 @@ function createForceGraph(baseSelector) {
 
     // Tooltip
     nodes_update.selectAll('circle')
+      .on('mouseenter', function(d) {
+        hoverBar(d.id);
+      })
+      .on('mouseleave', function(d) {
+        if (d.id != selectedTag){
+          hoverBar('');
+        }
+      })
       .on("mouseover", function(d) {    
         div_circle.transition()    
           .duration(200)    
@@ -199,13 +207,8 @@ function createForceGraph(baseSelector) {
         div_circle.transition()    
           .duration(500)    
           .style("opacity", 0)
-      })
-      .on('mouseenter', function(d) {
-        hoverBar(d.id);
-      })
-      .on('mouseleave', function(d) {
-        hoverBar('');
-      })
+      });
+      
 
     nodes.exit().remove();
 

@@ -1,5 +1,7 @@
 var jsondata;
 
+var selectedTag = '';
+
 // set the dimensions and margins of the graph
 var margin = {top: 20, right: 20, bottom: 100, left: 55},
     width = 950 - margin.left - margin.right,
@@ -42,9 +44,9 @@ function draw() {
         .data(jsondata.nodes)
         .enter().append("rect")
         .attr("class", "bar")
-        .on("click", function(d) { selectNode(d.id); selectBar(d.id)} )
+        .on("click", function(d) { selectedTag = d.id; selectNode(d.id); selectBar(d.id)} )
         .on('mouseenter', function (d) { hoverNode(d.id)})
-        .on('mouseleave', function (d) { hoverNode('')})
+        .on('mouseleave', function (d) { if (d.id != selectedTag) hoverNode('')})
         .attr("x", function(d) { return x(d.id); })
         .attr("width", x.bandwidth())
         .transition()
@@ -183,17 +185,14 @@ function changeYAxis(svg) {
 }
 
 function selectBar(name) {
-    d3.selectAll(".bar")
-        .filter(function(d) { return d.id != name; })
-        .style("fill", "greenyellow");
+    d3.selectAll("rect")
+        .attr('class',function(d) { 
+            return d.id == name ? 'selected' : 'bar'
+        });
 
     if (name === "" || name === null) {
         return;
     }
-
-    d3.selectAll(".bar")
-        .filter(function(d) { return d.id == name; })
-        .style("fill", "orange");
 }
 
 function hoverBar(name) {
