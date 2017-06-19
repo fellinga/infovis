@@ -42,7 +42,7 @@ button {
     border: none;
 }
 button:hover {
-    color: red;
+    background-color: #ecebea;
 }
 
 /* chart relevant code starts here */
