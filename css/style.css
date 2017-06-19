@@ -53,7 +53,11 @@ button:hover {
 circle,.bar {
     fill: greenyellow;
 }
+<<<<<<< HEAD
 circle:hover, .bar:hover, {
+=======
+circle:hover, .bar:hover {
+>>>>>>> origin/master
     fill: orange;
     cursor: pointer;
 }
