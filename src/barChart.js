@@ -42,7 +42,7 @@ function draw() {
         .data(jsondata.nodes)
         .enter().append("rect")
         .attr("class", "bar")
-        .on("click", function(d) { selectNode(d.id);} )
+        .on("click", function(d) { selectNode(d.id); selectBar(d.id)} )
         .attr("x", function(d) { return x(d.id); })
         .attr("width", x.bandwidth())
         .transition()
