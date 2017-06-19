@@ -43,6 +43,8 @@ function draw() {
         .enter().append("rect")
         .attr("class", "bar")
         .on("click", function(d) { selectNode(d.id); selectBar(d.id)} )
+        .on('mouseenter', function (d) { hoverNode(d.id)})
+        .on('mouseleave', function (d) { hoverNode('')})
         .attr("x", function(d) { return x(d.id); })
         .attr("width", x.bandwidth())
         .transition()

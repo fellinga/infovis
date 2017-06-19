@@ -154,6 +154,7 @@ function createForceGraph(baseSelector) {
 
     // NODE CIRCLES
     nodes_enter.append('circle')
+      .attr('class','circle')
       .attr('r',(d) => Math.sqrt(d.count/10));
       //.on('click', connectedNodes);
 
@@ -168,7 +169,7 @@ function createForceGraph(baseSelector) {
 
     nodes_update.selectAll('circle')
       .attr('class', (d) => 
-        d.id === selectedTag ? 'selected' : ''
+        d.id === selectedTag ? 'selected' : 'circle'
       );
 
     if (toggle == 1) {
@@ -327,7 +328,6 @@ function neighboring(a, b) {
 
 function selectNode(name) {
   if (name === "" || name === null) {
-        console.log("unselect all nodes");
         selectedTag = '';
         toggle = 1;
         filterGraphByTag();
@@ -335,7 +335,16 @@ function selectNode(name) {
         toggle = 0;
         return;
   }
-  console.log("PLEASE SELECT ME!!! " + name);
+  selectedTag = name;
+  filterGraphByTag();
+  updateCharts();
+}
+
+function hoverNode(name) {
+  d3.selectAll('circle')
+        .attr('class',function(d) { 
+            return d.id == name ? 'hover' : 'circle'
+        });
 }
 
 function forceCountBtn() {

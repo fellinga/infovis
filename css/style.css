@@ -56,9 +56,16 @@ button:hover {
 circle,.bar {
     fill: greenyellow;
 }
+circle.circle {
+    fill: greenyellow;
+}
 circle.selected {
     fill: orange;
     cursor: pointer;
+}
+circle.hover {
+    fill: aliceblue;
+    stroke: black;
 }
 circle:hover {
     fill: aliceblue;
