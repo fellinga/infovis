@@ -53,7 +53,7 @@ button:hover {
 circle,.bar {
     fill: greenyellow;
 }
-circle:hover, .bar:hover, .node text:hover {
+circle:hover, .bar:hover, {
     fill: orange;
     cursor: pointer;
 }
