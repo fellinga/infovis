@@ -198,7 +198,13 @@ function createForceGraph(baseSelector) {
         div_circle.transition()    
           .duration(500)    
           .style("opacity", 0)
-      });
+      })
+      .on('mouseenter', function(d) {
+        hoverBar(d.id);
+      })
+      .on('mouseleave', function(d) {
+        hoverBar('');
+      })
 
     nodes.exit().remove();
 
@@ -235,10 +241,6 @@ function createForceGraph(baseSelector) {
       nodes_update.selectAll('text')
         .attr("x", function(d) { return d.x = Math.max(dims.radius, Math.min(dims.width - dims.radius, d.x)); })
         .attr("y", function(d) { return d.y = Math.max(dims.radius, Math.min(dims.height - dims.radius, d.y)); });
-
-      // nodes_update
-      //     .attr("cx", function(d) { return d.x; })
-      //     .attr("cy", function(d) { return d.y; });
     }
 
     function circleClicked(d) {

@@ -67,6 +67,14 @@ circle:hover {
 rect.bar {
     fill: greenyellow;
 }
+rect.selected {
+    fill: orange;
+    cursor: pointer;
+}
+rect.hover {
+    fill: aliceblue;
+    stroke: black;
+}
 rect.bar:hover {
     fill: aliceblue;
     stroke: black;

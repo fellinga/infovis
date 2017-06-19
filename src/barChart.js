@@ -193,3 +193,10 @@ function selectBar(name) {
         .filter(function(d) { return d.id == name; })
         .style("fill", "orange");
 }
+
+function hoverBar(name) {
+    d3.selectAll('rect')
+        .attr('class',function(d) { 
+            return d.id == name ? 'hover' : 'bar'
+        });
+}
