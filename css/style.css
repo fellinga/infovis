@@ -53,6 +53,9 @@ button:hover {
 circle {
     fill: greenyellow;
 }
+circle:hover {
+    fill: orange;
+}
 .bar {
     fill: greenyellow;
 }
