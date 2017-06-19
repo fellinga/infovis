@@ -50,15 +50,10 @@ button:hover {
   	font: 15px helvetica;
     fill: black;
 }
-circle {
+circle,.bar {
     fill: greenyellow;
 }
-circle:hover {
+circle:hover, .bar:hover, .node text:hover {
     fill: orange;
-}
-.bar {
-    fill: greenyellow;
-}
-.bar:hover {
-    fill: orange;
+    cursor: pointer;
 }
