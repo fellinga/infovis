@@ -24,7 +24,7 @@ header,footer {
 }
 main {
     padding: 64px 1% 0 2%;
-	background-color:#507A87;
+	background-color:white;
 	padding: 64px 1% 0 2%;
 }
 @media (min-width: 1900px) {
@@ -46,19 +46,46 @@ button:hover {
 }
 
 /* chart relevant code starts here */
-.node text {
+/*.node text {
   	font: 15px helvetica;
     fill: black;
+}*/
+.link {
+    stroke: #ccc;
 }
 circle {
     fill: greenyellow;
 }
-circle:hover {
+circle.selected {
     fill: orange;
 }
-.bar {
+circle:hover {
+    fill: aliceblue;
+    stroke: black;
+}
+rect.bar {
     fill: greenyellow;
 }
-.bar:hover {
-    fill: orange;
+rect.bar:hover {
+    fill: aliceblue;
+    stroke: black;
+
+}
+
+text.node-text {
+    color: black;
+    font-family: 'Arial', Serif;
+}
+
+div.tooltip {   
+    position: absolute;         
+    text-align: center;         
+    width: 30px;                    
+    height: 14px;                   
+    padding: 2px;               
+    font: 12px sans-serif;      
+    background: lightsteelblue; 
+    border: 0px;        
+    border-radius: 8px;         
+    pointer-events: none;           
 }

@@ -1,4 +1,4 @@
-﻿var data = null;
+var data = null;
 var dataRec = null;
 
 var selectedTag = '';
@@ -8,15 +8,11 @@ var maxLinkValue = 1;
 var shownNodes = null; //others are faded out
 
 const forceGraph = createForceGraph('#forceGraph');
-const barChart = createBarChart('#barChart');
-
-var selectedButton = 'count'; //default
 
 //Toggle stores whether the highlighting is on
 var toggle = 0;
 var linkedByIndex = {};
-
-var svg_bar = d3.select();
+var selectedButton = 'cou'; //default: cou(nt)
 
 function getMaxLinkValue() {
   max = 1;
@@ -36,8 +32,6 @@ d3.json("data/graph_data_50.json", function(error, graph) {
   shownNodes = JSON.parse(JSON.stringify(data.nodes));
 
   maxLinkValue = getMaxLinkValue();
-
-  
   
 
   //Create an array logging what is connected to what
@@ -64,8 +58,8 @@ d3.json("data/graph_data_50.json", function(error, graph) {
 
 function updateCharts() {
   forceGraph();
-  barChart();
 }
+
 
 
 function createForceGraph(baseSelector) {
@@ -77,9 +71,13 @@ function createForceGraph(baseSelector) {
     };
 
   // Define the div for the tooltip
-  var div = d3.select("body").append("div") 
+  var div_link = d3.select("body").append("div") 
     .attr("class", "tooltip")       
     .style("opacity", 0);
+
+  var div_circle = d3.select('body').append('div')
+    .attr('class', 'tooltip')
+    .style('opacity', 0);
 
   const svg = d3.select(baseSelector).append('svg')
     .attr('width', dims.width + dims.margin*2)
@@ -126,15 +124,15 @@ function createForceGraph(baseSelector) {
     // Tooltip
     links_update
       .on("mouseover", function(d) {    
-        div.transition()    
+        div_link.transition()    
           .duration(200)    
           .style("opacity", .9);    
-        div .html(d.value)  
+        div_link.html(d.value)  
           .style("left", (d3.event.pageX) + "px")   
           .style("top", (d3.event.pageY - 28) + "px");  
       })          
       .on("mouseout", function(d) {   
-        div.transition()    
+        div_link.transition()    
           .duration(500)    
           .style("opacity", 0)
       });
@@ -177,6 +175,31 @@ function createForceGraph(baseSelector) {
       nodes_update.style('opacity', 1);
     }
 
+    function getRightAttribute(d) {
+      if (selectedButton === 'com') return d.comment;
+      else if (selectedButton === 'a')  return d.answer;
+      else if (selectedButton === 'f')  return d.fav;
+      else if (selectedButton === 's')  return d.score;
+      else if (selectedButton === 'v')  return d.view;
+      else  return d.count;
+    }
+
+    // Tooltip
+    nodes_update.selectAll('circle')
+      .on("mouseover", function(d) {    
+        div_circle.transition()    
+          .duration(200)    
+          .style("opacity", .9);    
+        div_circle.html(getRightAttribute(d))  
+          .style("left", (d3.event.pageX) + "px")   
+          .style("top", (d3.event.pageY - 28) + "px");  
+      })          
+      .on("mouseout", function(d) {   
+        div_circle.transition()    
+          .duration(500)    
+          .style("opacity", 0)
+      });
+
     nodes.exit().remove();
 
 
@@ -186,7 +209,18 @@ function createForceGraph(baseSelector) {
         .force("link")
         .links(data.links);
 
+
+    // set collision radius for every circle depending on selected button/node value
+    simulation.force('collide').radius(function(d) {
+      if (selectedButton === 'v') {
+        return Math.sqrt(getRightAttribute(d)/500);
+      } else {
+        return Math.sqrt(getRightAttribute(d)/5);
+      }
+    }).iterations(8);
+
     simulation.nodes(data.nodes).on("tick", ticked);
+    simulation.restart();
 
     function ticked() {
       links_update
@@ -213,12 +247,6 @@ function createForceGraph(baseSelector) {
       selectBar(selectedTag);    // function located at barChart.js
 
       connectedNodes(this);
-      //Reduce the opacity of all but the neighbouring nodes
-      // d = d3.select(this).node().__data__;
-      // console.log(d);
-      // nodes_update.style("opacity", function (o) {
-      //     return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.3;
-      // }); 
 
       manyBody.strength(-100);
 
@@ -236,7 +264,7 @@ function createForceGraph(baseSelector) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(me).node().__data__;
       nodes_update.style("opacity", function (o) {
-          return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.1
+          return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.3
       }); 
     }
 
@@ -264,103 +292,12 @@ function createForceGraph(baseSelector) {
       d.fx = null;
       d.fy = null;
     }
-  }
 
-  return update;
+    
+
+  
 }
 
-function createBarChart(baseSelector) {
-  // set the dimensions and margins of the graph  
-  var margin = {top: 20, right: 20, bottom: 100, left: 55},
-      width = 950 - margin.left - margin.right,
-      height = 750 - margin.top - margin.bottom;
-
-  // set the ranges
-  var x = d3.scaleBand()
-          .range([0, width])
-          .padding(0.1);
-  var y = d3.scaleLinear()
-          .range([height, 0]);
-
-  // append the svg object to the body of the page
-  // append a 'group' element to 'svg'
-  // moves the 'group' element to the top left margin
-  svg_bar = d3.select("#barChart").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", 
-          "translate(" + margin.left + "," + margin.top + ")");
-
-  function update() {
-
-    function getRightAttribute(d) {
-      if (selectedButton === 'comments') return d.comment;
-      else if (selectedButton === 'answers')  return d.answer;
-      else if (selectedButton === 'favorites')  return d.fav;
-      else if (selectedButton === 'scores')  return d.score;
-      else if (selectedButton === 'views')  return d.view;
-      else  return d.count;
-    }
-
-    // Scale the range of the data in the domains
-    x.domain(dataRec.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(dataRec.nodes, function(d) { 
-      return getRightAttribute(d);
-      })]);
-
-    // append the rectangles for the bar chart
-    svg_bar.selectAll(".bar")
-        .data(dataRec.nodes)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .on("click", function(d) { selectNode(d.id); selectBar(d.id)} )
-        .attr("x", function(d) { return x(d.id); })
-        .attr("width", x.bandwidth())
-        .transition()
-        .duration(1800)
-        .attr("y", function(d) { return y(getRightAttribute(d)); })
-        .attr("height", function(d) { return height - y(getRightAttribute(d)); });
-
-    // add the x Axis
-    svg_bar.append("g")
-        .transition()
-        .duration(900)
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
-            .transition()
-            .duration(900)
-            .selectAll("text")
-                .attr("y", 0)
-                .attr("x", 9)
-                .attr("dy", ".35em")
-                .attr("transform", "rotate(90)")
-                .style("text-anchor", "start");
-
-    // add the y Axis
-    svg_bar.append("g")
-        .transition()
-        .duration(1800)
-        .attr("class", "y axis")
-        .call(d3.axisLeft(y));
-  }
-
-   
-
-  function selectBar(name) {
-    d3.selectAll(".bar")
-        .filter(function(d) { return d.id != name; })
-        .style("fill", "greenyellow");
-
-    if (name === "" || name === null) {
-        return;
-    }
-
-    d3.selectAll(".bar")
-        .filter(function(d) { return d.id == name; })
-        .style("fill", "orange");
-  }
 
   return update;
 }
@@ -389,12 +326,18 @@ function neighboring(a, b) {
 function selectNode(name) {
   if (name === "" || name === null) {
         console.log("unselect all nodes");
+        selectedTag = '';
+        toggle = 1;
+        filterGraphByTag();
+        updateCharts();
+        toggle = 0;
         return;
   }
   console.log("PLEASE SELECT ME!!! " + name);
 }
 
 function forceCountBtn() {
+  selectedButton = 'cou';
   d3.selectAll("circle")
     .transition()
     .duration(1800)
@@ -402,6 +345,7 @@ function forceCountBtn() {
 }
 
 function forceCommentBtn() {
+  selectedButton = 'com';
   d3.selectAll("circle")
     .transition()
     .duration(1800)
@@ -409,6 +353,7 @@ function forceCommentBtn() {
 }
 
 function forceAnswerBtn() {
+  selectedButton = 'a';
   d3.selectAll("circle")
     .transition()
     .duration(1800)
@@ -416,6 +361,7 @@ function forceAnswerBtn() {
 }
 
 function forceFavoriteBtn() {
+  selectedButton = 'f';
   d3.selectAll("circle")
     .transition()
     .duration(1800)
@@ -423,6 +369,7 @@ function forceFavoriteBtn() {
 }
 
 function forceScoreBtn() {
+  selectedButton = 's';
   d3.selectAll("circle")
     .transition()
     .duration(1800)
@@ -430,53 +377,9 @@ function forceScoreBtn() {
 }
 
 function forceViewBtn() {
+  selectedButton = 'v';
   d3.selectAll("circle")
     .transition()
     .duration(1800)
-    .attr('r', (d) => Math.sqrt(d.view/300));
+    .attr('r', (d) => Math.sqrt(d.view/800));
 }
-
-function deselect() {
-  toggle = 1;
-  updateCharts();
-  toggle = 0;
-}
-
- // BUTTON UPDATE FUNCTIONS START HERE
-  function barCountBtn() {
-      selectedButton = 'count';
-      changeYAxis(svg);
-      updateCharts();   
-  }
-  function barCommentBtn() {
-      selectedButton = 'comments';
-      changeYAxis(svg_bar);
-      updateCharts();   
-  }
-  function barAnswerBtn() {
-      selectedButton = 'answers';
-      changeYAxis(svg_bar);
-      updateCharts();   
-  }
-  function barFavoriteBtn() {
-      selectedButton = 'favorites';
-      changeYAxis(svg_bar);
-      updateCharts();    
-  }
-  function barScoreBtn() {
-      selectedButton = 'scores';
-      changeYAxis(svg_bar);
-      updateCharts();   
-  }
-  function barViewBtn() {
-      selectedButton = 'views';
-      changeYAxis(svg_bar);
-      updateCharts();   
-  }
-
-  function changeYAxis(svg) {
-    svg.select(".y.axis") // change the y axis
-        .transition()
-        .duration(1800)
-    .call(d3.axisLeft(y));   
-  }
