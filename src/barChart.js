@@ -42,6 +42,7 @@ function draw() {
         .data(jsondata.nodes)
         .enter().append("rect")
         .attr("class", "bar")
+        .on("click", function(d) { selectNode(d.id);} )
         .attr("x", function(d) { return x(d.id); })
         .attr("width", x.bandwidth())
         .transition()
@@ -75,7 +76,7 @@ function draw() {
 // DEFAULT CHART FINISHED HERE
 
 // BUTTON UPDATE FUNCTIONS START HERE
-function countBtn() {
+function barCountBtn() {
     // Scale the range of the data in the domains
     x.domain(jsondata.nodes.map(function(d) { return d.id; }));
     y.domain([0, d3.max(jsondata.nodes, function(d) { return d.count; })]);
@@ -91,7 +92,7 @@ function countBtn() {
 
     changeYAxis(svg);   
 }
-function commentBtn() {
+function barCommentBtn() {
     // Scale the range of the data in the domains
     x.domain(jsondata.nodes.map(function(d) { return d.id; }));
     y.domain([0, d3.max(jsondata.nodes, function(d) { return d.comment; })]);
@@ -107,7 +108,7 @@ function commentBtn() {
 
     changeYAxis(svg);  
 }
-function answerBtn() {
+function barAnswerBtn() {
     // Scale the range of the data in the domains
     x.domain(jsondata.nodes.map(function(d) { return d.id; }));
     y.domain([0, d3.max(jsondata.nodes, function(d) { return d.answer; })]);
@@ -123,7 +124,7 @@ function answerBtn() {
 
     changeYAxis(svg);   
 }
-function favoriteBtn() {
+function barFavoriteBtn() {
     // Scale the range of the data in the domains
     x.domain(jsondata.nodes.map(function(d) { return d.id; }));
     y.domain([0, d3.max(jsondata.nodes, function(d) { return d.fav; })]);
@@ -139,7 +140,7 @@ function favoriteBtn() {
 
     changeYAxis(svg);   
 }
-function scoreBtn() {
+function barScoreBtn() {
     // Scale the range of the data in the domains
     x.domain(jsondata.nodes.map(function(d) { return d.id; }));
     y.domain([0, d3.max(jsondata.nodes, function(d) { return d.score; })]);
@@ -155,7 +156,7 @@ function scoreBtn() {
 
     changeYAxis(svg);  
 }
-function viewBtn() {
+function barViewBtn() {
     // Scale the range of the data in the domains
     x.domain(jsondata.nodes.map(function(d) { return d.id; }));
     y.domain([0, d3.max(jsondata.nodes, function(d) { return d.view; })]);
@@ -177,4 +178,18 @@ function changeYAxis(svg) {
         .transition()
         .duration(1800)
     .call(d3.axisLeft(y));   
+}
+
+function selectBar(name) {
+    d3.selectAll(".bar")
+        .filter(function(d) { return d.id != name; })
+        .style("fill", "greenyellow");
+
+    if (name === "" || name === null) {
+        return;
+    }
+
+    d3.selectAll(".bar")
+        .filter(function(d) { return d.id == name; })
+        .style("fill", "orange");
 }

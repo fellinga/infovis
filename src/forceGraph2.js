@@ -97,8 +97,8 @@ function createForceGraph(baseSelector) {
 
   function update() {
     svg.on('dbclick', setBack);
-    // NODES
 
+    // NODES
     const nodes = root.select("g.nodes")
       .selectAll("g")
       .data(data.nodes);
@@ -111,7 +111,6 @@ function createForceGraph(baseSelector) {
         .on('drag', dragged)
         .on('end', dragended));
 
-    
     // NODE CIRCLES
     nodes_enter.append('circle')
       .attr('r',(d) => Math.sqrt(d.count/10))
@@ -121,9 +120,7 @@ function createForceGraph(baseSelector) {
     nodes_enter.append('text')
       .attr('dx', 10)
       .attr('dy', '.35em')
-      .text((d) => d.id)
-      .style('stroke', 'black')
-      .style('fill', 'black');
+      .text((d) => d.id);
 
     const nodes_update = nodes.merge(nodes_enter);
 
@@ -210,6 +207,7 @@ function createForceGraph(baseSelector) {
   function circleClicked(d) {
 
     selectedTag = d.id;
+    selectBar(selectedTag);    // function located at barChart.js
     
     simulation.alphaTarget(0.3).restart();
 
@@ -255,7 +253,35 @@ function neighboring(a, b) {
 }
 
 
+function selectNode(name) {
+  if (name === "" || name === null) {
+        // unselect all nodes
 
+        return;
+  }
+  console.log("PLEASE SELECT ME!!! " + name);
+}
 
+function forceCountBtn() {
+  console.log("generate circle radius by count");
+}
 
+function forceCommentBtn() {
+  console.log("generate circle radius by comment");
+}
 
+function forceAnswerBtn() {
+  console.log("generate circle radius by answer");
+}
+
+function forceFavoriteBtn() {
+  console.log("generate circle radius by favorites");
+}
+
+function forceScoreBtn() {
+  console.log("generate circle radius by score");
+}
+
+function forceViewBtn() {
+  console.log("generate circle radius by view");
+}

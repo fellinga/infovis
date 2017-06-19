@@ -48,6 +48,7 @@ button:hover {
 /* chart relevant code starts here */
 .node text {
   	font: 15px helvetica;
+    fill: black;
 }
 circle {
     fill: greenyellow;
@@ -56,5 +57,5 @@ circle {
     fill: greenyellow;
 }
 .bar:hover {
-    fill: red;
+    fill: orange;
 }
