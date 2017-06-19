@@ -262,25 +262,43 @@ function selectNode(name) {
 }
 
 function forceCountBtn() {
-  console.log("generate circle radius by count");
+  d3.selectAll("circle")
+    .transition()
+    .duration(1800)
+    .attr('r', (d) => Math.sqrt(d.count/10));
 }
 
 function forceCommentBtn() {
-  console.log("generate circle radius by comment");
+  d3.selectAll("circle")
+    .transition()
+    .duration(1800)
+    .attr('r', (d) => Math.sqrt(d.comment/10));
 }
 
 function forceAnswerBtn() {
-  console.log("generate circle radius by answer");
+  d3.selectAll("circle")
+    .transition()
+    .duration(1800)
+    .attr('r', (d) => Math.sqrt(d.answer/10));
 }
 
 function forceFavoriteBtn() {
-  console.log("generate circle radius by favorites");
+  d3.selectAll("circle")
+    .transition()
+    .duration(1800)
+    .attr('r', (d) => Math.sqrt(d.fav/10));
 }
 
 function forceScoreBtn() {
-  console.log("generate circle radius by score");
+  d3.selectAll("circle")
+    .transition()
+    .duration(1800)
+    .attr('r', (d) => Math.sqrt(d.score/10));
 }
 
 function forceViewBtn() {
-  console.log("generate circle radius by view");
+  d3.selectAll("circle")
+    .transition()
+    .duration(1800)
+    .attr('r', (d) => Math.sqrt(d.view/300));
 }
