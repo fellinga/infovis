@@ -255,8 +255,7 @@ function neighboring(a, b) {
 
 function selectNode(name) {
   if (name === "" || name === null) {
-        // unselect all nodes
-
+        console.log("unselect all nodes");
         return;
   }
   console.log("PLEASE SELECT ME!!! " + name);
