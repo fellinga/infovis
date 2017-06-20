@@ -8,31 +8,26 @@ header {
 }
 footer {
     text-align: center;
-    height: 48px;
-    line-height: 48px;
-    font-size: 16px;
+    height: auto;
+    padding: 10px 0;
+    font-size: 18px;
 }
 header,footer {
     background-color:#333;
     color: #aaa;
 }
 #title {
-    float: left;
     line-height: 64px;
     font-size: 22px;
-    padding: 0 2%;
+    padding: 0 20px;
 }
 main {
-    padding: 64px 1% 0 2%;
+    padding: 64px 20px 0 20px;
 	background-color:white;
-	padding: 64px 1% 0 2%;
 }
-@media (min-width: 1900px) {
-    section {
-        display: inline-block;
-        margin: 0 40 0 40;
-        width: 45%;
-    }
+section.chartSection {
+    margin: 0;
+    display: inline-block;
 }
 button {
     color: black;
@@ -46,10 +41,6 @@ button:hover {
 }
 
 /* chart relevant code starts here */
-/*.node text {
-  	font: 15px helvetica;
-    fill: black;
-}*/
 .link {
     stroke: #ccc;
 }
@@ -87,12 +78,10 @@ rect.bar:hover {
     stroke: black;
 
 }
-
 text.node-text {
     color: black;
     font-family: 'Arial', Serif;
 }
-
 div.tooltip {   
     position: absolute;         
     text-align: center;         

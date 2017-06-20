@@ -3,9 +3,9 @@ var jsondata;
 var selectedTag = '';
 
 // set the dimensions and margins of the graph
-var margin = {top: 20, right: 20, bottom: 100, left: 55},
-    width = 950 - margin.left - margin.right,
-    height = 750 - margin.top - margin.bottom;
+var margin = {top: 40, right: 40, bottom: 110, left: 60},
+    width = 680,
+    height = 590;
 
 // set the ranges
 var x = d3.scaleBand()
@@ -28,7 +28,8 @@ init();
 
 function init() {
     d3.json("data/graph_data_50.json", function(dataFromServer) {
-        jsondata = dataFromServer;
+        jsondata = dataFromServer.nodes;
+        jsondata.sort(function(a, b) { return b.count - a.count; });
         // default action
         draw();
     });
@@ -36,12 +37,12 @@ function init() {
 
 function draw() {           
     // Scale the range of the data in the domains
-    x.domain(jsondata.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata.nodes, function(d) { return d.count; })]);
+    x.domain(jsondata.map(function(d) { return d.id; }));
+    y.domain([0, d3.max(jsondata, function(d) { return d.count; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
-        .data(jsondata.nodes)
+        .data(jsondata)
         .enter().append("rect")
         .attr("class", "bar")
         .on("click", function(d) { selectedTag = d.id; selectNode(d.id); selectBar(d.id)} )
@@ -76,14 +77,16 @@ function draw() {
         .duration(1800)
         .attr("class", "y axis")
         .call(d3.axisLeft(y));
+
 }
 // DEFAULT CHART FINISHED HERE
 
 // BUTTON UPDATE FUNCTIONS START HERE
 function barCountBtn() {
+    jsondata.sort(function(a, b) { return b.count - a.count; });
     // Scale the range of the data in the domains
-    x.domain(jsondata.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata.nodes, function(d) { return d.count; })]);
+    x.domain(jsondata.map(function(d) { return d.id; }));
+    y.domain([0, d3.max(jsondata, function(d) { return d.count; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
@@ -94,12 +97,14 @@ function barCountBtn() {
         .attr("height", function(d) { return height - y(d.count); }
     );
 
-    changeYAxis(svg);   
+    changeYAxis(svg);  
+    changeXAxis(svg); 
 }
 function barCommentBtn() {
+    jsondata.sort(function(a, b) { return b.comment - a.comment; });
     // Scale the range of the data in the domains
-    x.domain(jsondata.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata.nodes, function(d) { return d.comment; })]);
+    x.domain(jsondata.map(function(d) { return d.id; }));
+    y.domain([0, d3.max(jsondata, function(d) { return d.comment; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
@@ -111,11 +116,13 @@ function barCommentBtn() {
     );
 
     changeYAxis(svg);  
+    changeXAxis(svg);
 }
 function barAnswerBtn() {
+    jsondata.sort(function(a, b) { return b.answer - a.answer; });
     // Scale the range of the data in the domains
-    x.domain(jsondata.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata.nodes, function(d) { return d.answer; })]);
+    x.domain(jsondata.map(function(d) { return d.id; }));
+    y.domain([0, d3.max(jsondata, function(d) { return d.answer; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
@@ -126,12 +133,14 @@ function barAnswerBtn() {
         .attr("height", function(d) { return height - y(d.answer); }
     );
 
-    changeYAxis(svg);   
+    changeYAxis(svg);  
+    changeXAxis(svg); 
 }
 function barFavoriteBtn() {
+    jsondata.sort(function(a, b) { return b.fav - a.fav; });
     // Scale the range of the data in the domains
-    x.domain(jsondata.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata.nodes, function(d) { return d.fav; })]);
+    x.domain(jsondata.map(function(d) { return d.id; }));
+    y.domain([0, d3.max(jsondata, function(d) { return d.fav; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
@@ -142,12 +151,14 @@ function barFavoriteBtn() {
         .attr("height", function(d) { return height - y(d.fav); }
     );
 
-    changeYAxis(svg);   
+    changeYAxis(svg);
+    changeXAxis(svg);   
 }
 function barScoreBtn() {
+    jsondata.sort(function(a, b) { return b.score - a.score; });
     // Scale the range of the data in the domains
-    x.domain(jsondata.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata.nodes, function(d) { return d.score; })]);
+    x.domain(jsondata.map(function(d) { return d.id; }));
+    y.domain([0, d3.max(jsondata, function(d) { return d.score; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
@@ -158,12 +169,14 @@ function barScoreBtn() {
         .attr("height", function(d) { return height - y(d.score); }
     );
 
-    changeYAxis(svg);  
+    changeYAxis(svg); 
+    changeXAxis(svg); 
 }
 function barViewBtn() {
+    jsondata.sort(function(a, b) { return b.view - a.view; });
     // Scale the range of the data in the domains
-    x.domain(jsondata.nodes.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata.nodes, function(d) { return d.view; })]);
+    x.domain(jsondata.map(function(d) { return d.id; }));
+    y.domain([0, d3.max(jsondata, function(d) { return d.view; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll(".bar")
@@ -175,13 +188,29 @@ function barViewBtn() {
     );
 
     changeYAxis(svg);
+    changeXAxis(svg);
 }
 
 function changeYAxis(svg) {
-    svg.select(".y.axis") // change the y axis
+    svg.select(".y.axis")
         .transition()
         .duration(1800)
     .call(d3.axisLeft(y));   
+}
+
+function changeXAxis(svg) {
+    svg.select(".x.axis")
+        .transition()
+        .duration(900)
+        .call(d3.axisBottom(x))
+            .transition()
+            .duration(900)
+            .selectAll("text")
+                .attr("y", 0)
+                .attr("x", 9)
+                .attr("dy", ".35em")
+                .attr("transform", "rotate(90)")
+                .style("text-anchor", "start");
 }
 
 function selectBar(name) {

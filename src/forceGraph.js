@@ -64,9 +64,9 @@ function updateCharts() {
 
 function createForceGraph(baseSelector) {
   const dims = {
-    margin: 40,
-    width: 850,
-    height: 750,
+    margin: 0,
+    width: 780,
+    height: 670,
     radius: 70
     };
 
@@ -81,7 +81,7 @@ function createForceGraph(baseSelector) {
 
   const svg = d3.select(baseSelector).append('svg')
     .attr('width', dims.width + dims.margin*2)
-    .attr('height', dims.height + dims.margin*2);
+    .attr('height', dims.height + dims.margin*2 + 70);
     
 
     //create a root shifted element

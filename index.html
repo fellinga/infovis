@@ -13,11 +13,12 @@
 <body>
 	<header>
 		<div id="title">
-			SS2017 InfoVis Project
+			Information Visualization Project by Patrick Mörtenböck & Mario Fellinger
 		</div>
 	</header>
+
 	<main>
-		<div id="btnBar">
+		<section id="btnBar">
 			<button onclick="countBtn()"> Count </button>
 			<button onclick="commentBtn()"> Comments </button>
 			<button onclick="answerBtn()"> Answers </button>
@@ -25,21 +26,17 @@
 			<button onclick="scoreBtn()"> Score </button>
 			<button onclick="viewBtn()"> Views </button>
 			<button onclick="deselect()" style="background-color:lightblue"> Deselect </button>
-		</div>
+		</section>
         <section class="chartSection">
-            <h3>Force Graph</h3>
-            
             <div id="forceGraph"></div>
         </section>
 		<section class="chartSection">
-        	<h3>Bar Chart</h3>
-
         	<div id="barChart"></div>
         </section>
     </main>
 
 	<footer>
-    	a infovis project by Patrick Mörtenböck &amp; Mario Fellinger.
+		optimized for 1650x1050 <br>
 		visit us @ <a href="https://github.com/fellinga/infovis" target="_blank"> github </a>
     </footer>
 
@@ -48,7 +45,5 @@
 	<script type="text/javascript" src="src/util.js" ></script>
 	<script type="text/javascript" src="src/forceGraph.js" ></script>
 	<script type="text/javascript" src="src/barChart.js" ></script>
-	
-
 </body>
 </html>
