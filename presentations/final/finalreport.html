@@ -18,9 +18,9 @@
 	</header>
 
 	<main>
-		<h3>Information Visualization Lab Project <br>
-		Mario Fellinger & Patrick Mörtenböck </h3>
-		See the Visualization here: <a href="https://fellinga.github.io/infovis" target="_blank"> github.io </a>
+		<h2>Information Visualization Lab Project</h2>
+		<h3>Mario Fellinger & Patrick Mörtenböck </h3>
+		<center>See the Visualization here: <a href="https://fellinga.github.io/infovis" target="_blank"> github.io </a></center>
 		<section id='overview'>
 			<h4>Overview</h4>
 			<ul>
@@ -41,7 +41,7 @@
 				<ul>
 					<li> <a href="https://archive.org/download/stackexchange"> https://archive.org/download/stackexchange </a> </li>
 					<li> <a href="https://superuser.com/"> https://superuser.com/ </a> </li>
-					<li> <a href="img/superuser.png" target="_blank"> <img src="img/superuser.png" height="400px" width="400px"> </a>
+					<center><a href="img/superuser.png" target="_blank"> <img src="img/superuser.png" height="500px" width="500px"> </a></center>
 				</ul>
 			</p>
 		</section>
@@ -50,10 +50,10 @@
 			<ol>
 				<li>What were the most used tags throughout the year 2016?</li>
 				<li>How often were these tags used?</li>
-				<li>How many comments and answers did questions get with a specific tag?</li>
-				<li>How often were questions with a specific tag marked as favorite?</li>
-				<li>How big is the total score of all questions tagged with a specific tag?</li>
-				<li>How many views did a questions get with a specific tag?</li>
+				<li>How many comments and answers did questions get in average with a specific tag?</li>
+				<li>In average how often were questions with a specific tag marked as favorite?</li>
+				<li>In average how big is the total score of all questions tagged with a specific tag?</li>
+				<li>In average how many views did a questions get with a specific tag?</li>
 				<li>What is the ranking of tags depending on the attributes explained in the questions above?</li>
 				<li>What tags were used together frequently?</li>
 				<li>How often where these tags used together?</li>
@@ -61,23 +61,28 @@
 		</section>
 		<section id='dashboard'>
 			<h4>Dashboard</h4>
-			
+			<p>
 				We used D3.js Version 4.0 and plain Javascript to implement the dashboard. On the one hand we used a node-link-diagram and a forceLayout to show the tags as circles and connect them if selected (User Tasks 8 and 9). The circles' radii are encoded to the value depending the selected attribute (count, comments, answers, ... see User Tasks 1 to 6).<br>
 				In order to compare the tags or their attributes with each other we implemented a bar chart that shows the exact attribute values and sorts them (User Task 7).
-			
+			</p>
 		</section>
 		<section id='limitations'>
 			<h4>Limitations</h4>
+			<p>
 			We experienced several limitations: 
+			</p>
 				<ul>
 					<li><b>Too many tags</b>: basically we wanted to show all used tags of the year 2016, but that are more than 1000, what is impossible to present in a node-link-diagram on a normal screen. So we decided to only use the 50 most used tags.</li>
 					<li><b>Too many connections</b>: As we used only the top 50 tags of the dataset, we got in trouble visualizing the tags that were used together. The simple reason is, that nearly every tag of the top 50 was used with each other at least once. So we decided to just show a connection if two tags were used more often than 50 times.</li>
 				</ul>
+			<p>
 				THE general limitation visualizing something with a node-link-diagram is the size of the presentation device. The more space to present the more nodes can be shown. As a result of that the problem with the too many connections wouldn't be that bad.
-			
+			</p>
 		</section>
 		<section id='answerUserTasks'>
+			<p>
 			The solutions answers the users to answer the tasks in the following way:
+			</p>
 			<ul>
 				<li>1. The most used tags throughout the year 2016 are simply the tags shown as circles or in the bar chart.</li>
 				<li>2.-6. After selecting the button with the desired attribute one can hover over a circle to see a tooltip with the exact number occurances/comments/answers/...</li>
@@ -87,10 +92,10 @@
 			</ul>
 		</section>
 		<section id='findings'>
-		<h4>Findings/insights</h4>
+		<h4>Findings/Insights</h4>
 			<ol>
 				<li>
-					Tags with names including "windows" where used most of the time (three tags under the top five). However, concerning the average answers and comments per question they are just ranked in the middle of the list. It is the same with the average favorite count and the scores. <br/>
+					Tags with names including "windows" where used the most (three tags under the top five). However, concerning the average answers and comments per question they are just ranked in the middle of the list. It is the same with the average favorite count and the scores. <br/>
 					It seems that these operating systems are used by a lot of people - hence the high count values - but when it comes to answer the questions only a few users respond or find the questions useful.
 				</li>
 				<li>
@@ -101,10 +106,12 @@
 	</section>
 	<section id='conclusion'>
 		<h4>Conclusions</h4>
+		<p>
 			It is interesting to see, what tags are used at the different questions and how frequently these questions get answers/comments or votes.<br/>
 			From the technical point of view, maybe a node-link-diagram is not best suited for this task, mainly because there are too many different tags that are used and used with each other as well. <br/>
 			Some other form of visualization, for example a adjacency matrix, would give better insights to the whole dataset.<br/>
 			Nevertheless, we learned a lot about using the force layout and its parameters and about D3.js in general.
+		</p>
 	</section>
 	</main>
 
