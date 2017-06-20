@@ -73,18 +73,24 @@ d3.json(pathToData, function(dataFromServer) {
 
 // HIGHLIGHTING FUNCTION WHEN A BAR IS SELECTED
 function selectBar(object) {
-    console.log(object.id)
     d3.selectAll("rect")
         .attr('class',function(d) { 
             return d.id == object.id ? 'selected' : 'bar'
         });
 
-    d3.selectAll("rect")
-        .transition()
-        .duration(1000)
-        .style("opacity", function (o) {
-          return neighboring(object.id, o.id) | neighboring(o.id, object.id) ? 1 : lightOpacity
-      });
+    if (object == "") {
+        d3.selectAll("rect")
+            .transition()
+            .duration(1000)
+            .style("opacity", 1 );
+    } else {
+        d3.selectAll("rect")
+            .transition()
+            .duration(1000)
+            .style("opacity", function (o) {
+            return neighboring(object.id, o.id) | neighboring(o.id, object.id) ? 1 : lightOpacity
+        });
+    }
 }
 // HIGHLIGHTING FUNCTION WHEN A BAR IS HOVERED
 function hoverBar(name) {
