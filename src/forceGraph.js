@@ -92,7 +92,7 @@ function createForceGraph(baseSelector) {
 
   manyBody = d3.forceManyBody();
   manyBody.strength(-30);
-  //manyBody.distanceMax(200);
+  // manyBody.distanceMin(10);
 
   collide = d3.forceCollide();
   collide.radius(70);
@@ -270,7 +270,7 @@ function createForceGraph(baseSelector) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(me).node().__data__;
       nodes_update.style("opacity", function (o) {
-          return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.3
+          return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.2
       }); 
     }
 
