@@ -24,56 +24,72 @@ var svg = d3.select("#barChart").append("svg")
 
 d3.json("data/superuser_tagdata_top50.json", function(dataFromServer) {
     jsondata = dataFromServer.nodes;
-    jsondata.sort(function(a, b) { return b.count - a.count; });
-    // default action -> count
-    draw();
-});
+    function draw() {
+        jsondata.sort(function(a, b) { return b.count - a.count; });
+        // Scale the range of the data in the domains
+        x.domain(jsondata.map(function(d) { return d.id; }));
+        y.domain([0, d3.max(jsondata, function(d) { return d.count; })]);
 
-function draw() {           
-    // Scale the range of the data in the domains
-    x.domain(jsondata.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata, function(d) { return d.count; })]);
+        // append the rectangles for the bar chart
+        svg.selectAll(".bar")
+            .data(jsondata)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .on("click", function(d) { selectedTag = d.id; selectNode(d.id); selectBar(d.id)} )
+            .on('mouseenter', function (d) { hoverNode(d.id)})
+            .on('mouseleave', function (d) { if (d.id != selectedTag) hoverNode('')})
+            .attr("x", function(d) { return x(d.id); })
+            .attr("width", x.bandwidth())
+            .transition()
+            .duration(1800)
+            .attr("y", function(d) { return y(d.count); })
+            .attr("height", function(d) { return height - y(d.count); });
 
-    // append the rectangles for the bar chart
-    svg.selectAll(".bar")
-        .data(jsondata)
-        .enter().append("rect")
-        .attr("class", "bar")
-        .on("click", function(d) { selectedTag = d.id; selectNode(d.id); selectBar(d.id)} )
-        .on('mouseenter', function (d) { hoverNode(d.id)})
-        .on('mouseleave', function (d) { if (d.id != selectedTag) hoverNode('')})
-        .attr("x", function(d) { return x(d.id); })
-        .attr("width", x.bandwidth())
-        .transition()
-        .duration(1800)
-        .attr("y", function(d) { return y(d.count); })
-        .attr("height", function(d) { return height - y(d.count); });
-
-    // add the x Axis
-    svg.append("g")
-        .transition()
-        .duration(900)
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
+        // add the x Axis
+        svg.append("g")
             .transition()
             .duration(900)
-            .selectAll("text")
-                .attr("y", 0)
-                .attr("x", 9)
-                .attr("dy", ".35em")
-                .attr("transform", "rotate(90)")
-                .style("text-anchor", "start");
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+                .transition()
+                .duration(900)
+                .selectAll("text")
+                    .attr("y", 0)
+                    .attr("x", 9)
+                    .attr("dy", ".35em")
+                    .attr("transform", "rotate(90)")
+                    .style("text-anchor", "start");
 
-    // add the y Axis
-    svg.append("g")
-        .transition()
-        .duration(1800)
-        .attr("class", "y axis")
-        .call(d3.axisLeft(y));
-}
+        // add the y Axis
+        svg.append("g")
+            .transition()
+            .duration(1800)
+            .attr("class", "y axis")
+            .call(d3.axisLeft(y));
+    }
+    draw();
+});
 // DEFAULT CHART FINISHED HERE
-    
+
+// HIGHLIGHTING FUNCTION WHEN A BAR IS SELECTED
+function selectBar(name) {
+    d3.selectAll("rect")
+        .attr('class',function(d) { 
+            return d.id == name ? 'selected' : 'bar'
+        });
+}
+// HIGHLIGHTING FUNCTION WHEN A BAR IS HOVERED
+function hoverBar(name) {
+    d3.selectAll('.bar')
+        .attr('class',function(d) {
+            return d.id == name ? 'hover' : 'bar'
+        });
+    d3.selectAll('.hover')
+        .attr('class',function(d) {
+            return d.id == name ? 'hover' : 'bar'
+        });
+}
 
 // BUTTON UPDATE FUNCTIONS START HERE
 function barCountBtn() {
@@ -205,22 +221,4 @@ function changeXAxis() {
                 .attr("dy", ".35em")
                 .attr("transform", "rotate(90)")
                 .style("text-anchor", "start");
-}
-
-function selectBar(name) {
-    d3.selectAll("rect")
-        .attr('class',function(d) { 
-            return d.id == name ? 'selected' : 'bar'
-        });
-}
-
-function hoverBar(name) {
-    d3.selectAll('.bar')
-        .attr('class',function(d) {
-            return d.id == name ? 'hover' : 'bar'
-        });
-    d3.selectAll('.hover')
-        .attr('class',function(d) {
-            return d.id == name ? 'hover' : 'bar'
-        });
 }

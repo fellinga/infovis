@@ -1,5 +1,4 @@
-// UTIL JS for UPDATES and CLICKS
-// higlight active button
+// HIGHLIGHT THE ACTIVE BUTTON
 function markButton(buttonID) {
     d3.selectAll("button")
         .attr('disabled', null);
@@ -8,7 +7,7 @@ function markButton(buttonID) {
         .attr('disabled', true);
 }
 
-// BUTTON ROW HANDLER
+// BUTTON HANDLER
 function countBtn() {
     barCountBtn();          // function located at barChart.js
     forceCountBtn();        // function located at forceGraph.js
