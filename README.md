@@ -5,14 +5,13 @@ Projekt SS2017
 Patrick Mörtenböck
 Mario   Fellinger
 
-TODO
- + define tags for every os
- + build a csv for every os system with
-	word, count
- + think about the popularity measurement
+Dataset: top 50 used tags on superuser.com (year 2016)
 
+    + Count: How often a tag was used.
+    + Comments: How many comments a tag got.
+    + Answers: How many answers a tag got.
+    + Favorites: How many favorites a tag got.
+    + Score: The score a tag got.
+    + Views: How many views a tag got.
 
- + look at http://vallandingham.me/bubble_chart/#
-	maybe we could do the same thing
-		-> all words without restriction
-		-> separated by unix - windows - apple
+and how often they appear with each other.
