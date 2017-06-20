@@ -120,6 +120,8 @@ function updateBarView() {
 
     // append the rectangles for the bar chart
     svg.selectAll("rect")
+        .transition()
+        .duration(1800)
         .attr("x", function(d) { return x(d.id); })
         .transition()
         .duration(1800)
