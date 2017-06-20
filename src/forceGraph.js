@@ -285,6 +285,7 @@ function filterGraphByTag() {
 // HIGHLIGHTING FUNCTION WHEN A NODE IS SELECTED
 function selectNode(object) {
   if (object == "") {
+        // NO NODE IS SELECTED
         d3.selectAll(".node")
             .transition()
             .duration(1000)
@@ -297,7 +298,7 @@ function selectNode(object) {
         toggle = 0;
         return;
   }
-
+  // SELECT NODE OBJECT
   selectedTag = object.id;
   filterGraphByTag();
   updateCharts();
