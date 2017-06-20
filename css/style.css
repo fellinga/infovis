@@ -17,9 +17,17 @@ header,footer {
     color: #aaa;
 }
 #title {
+    float: left;
     line-height: 64px;
     font-size: 22px;
     padding: 0 20px;
+}
+#info {
+    float: right;
+    line-height: 54px;
+    font-size: 22px;
+    width: 64px;
+    padding: 0;
 }
 main {
     padding: 64px 20px 0 20px;
