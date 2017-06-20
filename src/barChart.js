@@ -34,7 +34,7 @@ d3.json(pathToData, function(dataFromServer) {
             .data(jsondata)
             .enter().append("rect")
             .attr("class", "bar")
-            .on("click", function(d) { selectedTag = d.id; selectNode(d.id); selectBar(d.id)} )
+            .on("click", function(d) { selectedTag = d.id; selectNode(d); selectBar(d)} )
             .on('mouseenter', function (d) { hoverNode(d.id)})
             .on('mouseleave', function (d) { if (d.id != selectedTag) hoverNode('')})
             .attr("x", function(d) { return x(d.id); })
@@ -72,11 +72,19 @@ d3.json(pathToData, function(dataFromServer) {
 // DEFAULT CHART FINISHED HERE
 
 // HIGHLIGHTING FUNCTION WHEN A BAR IS SELECTED
-function selectBar(name) {
+function selectBar(object) {
+    console.log(object.id)
     d3.selectAll("rect")
         .attr('class',function(d) { 
-            return d.id == name ? 'selected' : 'bar'
+            return d.id == object.id ? 'selected' : 'bar'
         });
+
+    d3.selectAll("rect")
+        .transition()
+        .duration(1000)
+        .style("opacity", function (o) {
+          return neighboring(object.id, o.id) | neighboring(o.id, object.id) ? 1 : lightOpacity
+      });
 }
 // HIGHLIGHTING FUNCTION WHEN A BAR IS HOVERED
 function hoverBar(name) {
@@ -90,7 +98,7 @@ function hoverBar(name) {
         });
 }
 
-// BUTTON UPDATE FUNCTIONS START HERE
+// BUTTON UPDATE FUNCTION
 function updateBarView() {
     jsondata.sort(function(a, b) { return getRightAttribute(b) - getRightAttribute(a); });
     // Scale the range of the data in the domains
