@@ -1,29 +1,43 @@
 // UTIL JS for UPDATES and CLICKS
+// higlight active button
+function markButton(buttonID) {
+    d3.selectAll("button")
+        .attr('disabled', null);
+
+    d3.select("#" + buttonID)
+        .attr('disabled', true);
+}
 
 // BUTTON ROW HANDLER
 function countBtn() {
     barCountBtn();          // function located at barChart.js
     forceCountBtn();        // function located at forceGraph.js
+    markButton("count");
 }
 function commentBtn() {
     barCommentBtn();        // function located at barChart.js
     forceCommentBtn();      // function located at forceGraph.js
+    markButton("comment");
 }
 function answerBtn() {
     barAnswerBtn();         // function located at barChart.js
     forceAnswerBtn();       // function located at forceGraph.js
+    markButton("answer");
 }
 function favoriteBtn() {
     barFavoriteBtn();       // function located at barChart.js
     forceFavoriteBtn();     // function located at forceGraph.js
+    markButton("favorite");
 }  
 function scoreBtn() {
     barScoreBtn();          // function located at barChart.js
     forceScoreBtn();        // function located at forceGraph.js
+    markButton("score");
 }
 function viewBtn() {
     barViewBtn();           // function located at barChart.js
     forceViewBtn();         // function located at forceGraph.js
+    markButton("view");
 }
 function deselect() {
     selectBar("");          // function located at barChart.js

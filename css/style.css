@@ -47,6 +47,9 @@ button {
 button:hover {
     background-color: #ecebea;
 }
+button:disabled {
+    background-color: #ccc;
+}
 
 /* chart relevant code starts here */
 .link {
