@@ -43,6 +43,7 @@ button {
     line-height: 30px;
     background-color: greenyellow;
     border: none;
+    cursor: pointer;
 }
 button:hover {
     background-color: #ecebea;
