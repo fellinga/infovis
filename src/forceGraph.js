@@ -218,7 +218,7 @@ function createForceGraph(baseSelector) {
 
     function circleClicked(d) {
       selectedTag = d.id;
-      selectBar(selectedTag);    // function located at barChart.js
+      selectBar(d);       // function located at barChart.js
 
       connectedNodes(this);
 
@@ -233,9 +233,12 @@ function createForceGraph(baseSelector) {
     function connectedNodes(me) {
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(me).node().__data__;
-      nodes_update.style("opacity", function (o) {
-          return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : 0.2
-      }); 
+      nodes_update
+        .transition()
+        .duration(1000)
+        .style("opacity", function (o) {
+          return neighboring(d.id, o.id) | neighboring(o.id, d.id) ? 1 : lightOpacity
+      });
     }
 
     function setBack() {
@@ -269,7 +272,7 @@ function filterGraphByTag() {
   data.links.splice(0, data.links.length); //delete data.links
   shownNodes.splice(0, shownNodes.length); //delete shownNodes
   shownNodes.push(selectedTag); //insert selected element
-  console.log(selectedTag);
+
   for (var i=0; i<dataRec.links.length; i++) {
     if (dataRec.links[i].source === selectedTag && dataRec.links[i].value > 50)
     {
@@ -279,13 +282,9 @@ function filterGraphByTag() {
   }
 }
 
-//This function looks up whether a pair are neighbours  
-function neighboring(a, b) {
-    return linkedByIndex[a + "," + b];
-}
-
-function selectNode(name) {
-  if (name === "" || name === null) {
+// HIGHLIGHTING FUNCTION WHEN A NODE IS SELECTED
+function selectNode(object) {
+  if (object.id === null || object.id === "") {
         selectedTag = '';
         toggle = 1;
         filterGraphByTag();
@@ -293,11 +292,11 @@ function selectNode(name) {
         toggle = 0;
         return;
   }
-  selectedTag = name;
+  selectedTag = object.id;
   filterGraphByTag();
   updateCharts();
 }
-
+// HIGHLIGHTING FUNCTION WHEN A NODE IS HOVERED
 function hoverNode(name) {
   d3.selectAll('.circle')
         .attr('class',function(d) { 
@@ -309,6 +308,7 @@ function hoverNode(name) {
         });
 }
 
+// BUTTON UPDATE FUNCTION -> adjust circle radius
 function updateForceView() {
   var div = 10;
   // SINCE VIEW DATA IS TO LARGE WE NEED TO ADJUST

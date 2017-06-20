@@ -1,5 +1,7 @@
 // DATA LOCATION
 var pathToData = "data/superuser_tagdata_top50.json";
+// DEFAULT LIGHT OPACITY
+var lightOpacity = 0.3;
 // DEFAULT VIEW: COUNT
 var selectedButton = 'count';
 markButton(selectedButton);
@@ -34,6 +36,11 @@ function getRightAttribute(d) {
     else if (selectedButton === 'score')  return d.score;
     else if (selectedButton === 'view')  return d.view;
     else  return d.count;
+}
+
+//LOOKS UP WHETHER A PAIR A NEIGHBOURS
+function neighboring(a, b) {
+    return linkedByIndex[a + "," + b];
 }
 
 // CHART INFORMATION BUTTON
