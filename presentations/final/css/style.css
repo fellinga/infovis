@@ -1,0 +1,32 @@
+body {
+    margin:0;
+}
+header {
+    height: 64px;
+    width: 100%;
+    position:fixed;
+}
+footer {
+    text-align: center;
+    height: auto;
+    padding: 10px 0;
+    font-size: 18px;
+}
+header,footer {
+    background-color:#333;
+    color: #aaa;
+}
+#title {
+    float: left;
+    line-height: 64px;
+    font-size: 22px;
+    padding: 0 20px;
+}
+main {
+    padding: 64px 20px 0 20px;
+	background-color:white;
+}
+h4 {
+    background-color: lightgreen;
+    line-height: 40px;
+}

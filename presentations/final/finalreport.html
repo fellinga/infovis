@@ -1,59 +1,77 @@
 <!DOCTYPE html>
+<html lang="de">
 <head>
-	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title> Information Visualization Lab Project </title>
+	<!-- STYLESHEETS -->
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
 </head>
 
 <body>
-	<h1>Final Report</h1>
-	<h2>Information Visualization Lab Project</h2>
-	<h3>Mario Fellinger</h3>
-	<h3>Patrick Mörtenböck</h3>
+	<header>
+		<div id="title">
+			Final Report
+		</div>
+	</header>
 
-	<section id='dataset'>
-		<h4>Dataset</h4>
-		<span>The Dataset consists of questions,answers and comments and their attributes asked on superuser.com in the year 2016</span>
-		<img src="img/superuser.png">
-	</section>
-	<section id='usertask'>
-		<h4>User Tasks</h4>
-		<ol>
-			<li>What were the most used tags throughout the year 2016?</li>
-			<li>How often were these tags used?</li>
-			<li>How many comments and answers did questions get with a specific tag?</li>
-			<li>How often were questions with a specific tag marked as favorite?</li>
-			<li>How big is the total score of all questions tagged with a specific tag?</li>
-			<li>How many views did a questions get with a specific tag?</li>
-			<li>What is the ranking of tags depending on the attributes explained in the questions above?</li>
-			<li>What tags were used together frequently?</li>
-			<li>How often where these tags used together?</li>
-		</ol>
-	</section>
-	<section id='dashboard'>
-		<h4>Dashboard</h4>
-		<span>
-			We used D3.js Version 4.0 and plain Javascript to implement the dashboard. On the one hand we used a node-link-diagram and a forceLayout to show the tags as circles and connect them if selected (User Tasks 8 and 9). The circles' radii are encoded to the value depending the selected attribute (count, comments, answers, ... see User Tasks 1 to 6).<br>
-			In order to compare the tags or their attributes with each other we implemented a bar chart that shows the exact attribute values and sorts them (User Task 7).
-		</span>
-	</section>
-	<section id='limitations'>
-		<h4>Limitations</h4>
-		<span>We experienced several limitations: 
+	<main>
+		<h3>Information Visualization Lab Project
+		Mario Fellinger & Patrick Mörtenböck </h3>
+		<section id='dataset'>
+			<h4>Dataset</h4>
+			<p>
+				The Dataset consists of questions,answers and comments and their attributes asked on superuser.com in the year 2016
+			</p>
+			<a href="img/superuser.png" target="_blank"> <img src="img/superuser.png" height="400px" width="400px"> </a>
+		</section>
+		<section id='usertask'>
+			<h4>User Tasks</h4>
+			<ol>
+				<li>What were the most used tags throughout the year 2016?</li>
+				<li>How often were these tags used?</li>
+				<li>How many comments and answers did questions get with a specific tag?</li>
+				<li>How often were questions with a specific tag marked as favorite?</li>
+				<li>How big is the total score of all questions tagged with a specific tag?</li>
+				<li>How many views did a questions get with a specific tag?</li>
+				<li>What is the ranking of tags depending on the attributes explained in the questions above?</li>
+				<li>What tags were used together frequently?</li>
+				<li>How often where these tags used together?</li>
+			</ol>
+		</section>
+		<section id='dashboard'>
+			<h4>Dashboard</h4>
+			
+				We used D3.js Version 4.0 and plain Javascript to implement the dashboard. On the one hand we used a node-link-diagram and a forceLayout to show the tags as circles and connect them if selected (User Tasks 8 and 9). The circles' radii are encoded to the value depending the selected attribute (count, comments, answers, ... see User Tasks 1 to 6).<br>
+				In order to compare the tags or their attributes with each other we implemented a bar chart that shows the exact attribute values and sorts them (User Task 7).
+			
+		</section>
+		<section id='limitations'>
+			<h4>Limitations</h4>
+			We experienced several limitations: 
+				<ul>
+					<li><b>Too many tags</b>: basically we wanted to show all used tags of the year 2016, but that are more than 1000, what is impossible to present in a node-link-diagram on a normal screen. So we decided to only use the 50 most used tags.</li>
+					<li><b>Too many connections</b>: As we used only the top 50 tags of the dataset, we got in trouble visualizing the tags that were used together. The simple reason is, that nearly every tag of the top 50 was used with each other at least once. So we decided to just show a connection if two tags were used more often than 50 times.</li>
+				</ul>
+				THE general limitation visualizing something with a node-link-diagram is the size of the presentation device. The more space to present the more nodes can be shown. As a result of that the problem with the too many connections wouldn't be that bad.
+			
+		</section>
+		<section id='Answer User Tasks'>
+			The solutions answers the users to answer the tasks in the following way:
 			<ul>
-				<li><b>Too many tags</b>: basically we wanted to show all used tags of the year 2016, but that are more than 1000, what is impossible to present in a node-link-diagram on a normal screen. So we decided to only use the 50 most used tags.</li>
-				<li><b>Too many connections</b>: As we used only the top 50 tags of the dataset, we got in trouble visualizing the tags that were used together. The simple reason is, that nearly every tag of the top 50 was used with each other at least once. So we decided to just show a connection if two tags were used more often than 50 times.</li>
+				<li>1. The most used tags throughout the year 2016 are simply the tags shown as circles or in the bar chart.</li>
+				<li>2.-6. After selecting the button with the desired attribute one can hover over a circle to see a tooltip with the exact number occurances/comments/answers/...</li>
+				<li>7. The order of the tags depending on the selected button is shown in the bar chart.</li>
+				<li>8. To see what other tags were used with a specific tag, one has to press the node belonging to that tag. Immediately every node gets connected to the selected one.</li>
+				<li>9. To get the exact number how often two tags were used together a tooltip is shown whenever a link is hovered.</li>
 			</ul>
-			THE general limitation visualizing something with a node-link-diagram is the size of the presentation device. The more space to present the more nodes can be shown. As a result of that the problem with the too many connections wouldn't be that bad.
-		</span>
-	</section>
-	<section id='Answer User Tasks'>
-		The solutions answers the users to answer the tasks in the following way:
-		<ul>
-			<li>1. The most used tags throughout the year 2016 are simply the tags shown as circles or in the bar chart.</li>
-			<li>2.-6. After selecting the button with the desired attribute one can hover over a circle to see a tooltip with the exact number occurances/comments/answers/...</li>
-			<li>7. The order of the tags depending on the selected button is shown in the bar chart.</li>
-			<li>8. To see what other tags were used with a specific tag, one has to press the node belonging to that tag. Immediately every node gets connected to the selected one.</li>
-			<li>9. To get the exact number how often two tags were used together a tooltip is shown whenever a link is hovered.</li>
-		</ul>
-	</section>
+		</section>
+	</main>
+
+	<footer>
+		visit us @ <a href="https://github.com/fellinga/infovis" target="_blank"> github </a>
+    </footer>
 
 </body>
