@@ -79,7 +79,7 @@ function createForceGraph(baseSelector) {
   // manyBody.distanceMin(10);
 
   collide = d3.forceCollide();
-  collide.radius(70);
+  collide.radius(90);
   collide.strength(0.05);
 
   var simulation = d3.forceSimulation()
@@ -172,7 +172,12 @@ function createForceGraph(baseSelector) {
         div_circle.transition()    
           .duration(200)    
           .style("opacity", .9);    
-        div_circle.html(getRightAttribute(d))  
+        div_circle.html(() => {
+            if (selectedButton == 'count')
+              return getRightAttribute(d);
+            else
+              return d3.format('.2f')(getRightAttribute(d));
+        })
           .style("left", (d3.event.pageX) + "px")   
           .style("top", (d3.event.pageY - 28) + "px");  
       })          
@@ -324,7 +329,7 @@ function hoverNode(name) {
 
 // BUTTON UPDATE FUNCTION -> adjust circle radius
 function updateForceView() {
-  var div = 0.001;
+  var div = 0.01;
 
   // SINCE VIEW DATA IS TO LARGE WE NEED TO ADJUST
   if (selectedButton === "view") {
