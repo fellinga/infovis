@@ -66,6 +66,13 @@ d3.json(pathToData, function(dataFromServer) {
             .duration(1800)
             .attr("class", "y axis")
             .call(d3.axisLeft(y));
+
+        // add the y Axis grid lines
+        svg.append('g')
+            .transition()
+            .duration(1800)
+            .attr('class', 'grid')
+            .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
     }
     draw();
 });

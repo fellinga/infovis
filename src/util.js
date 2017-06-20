@@ -48,11 +48,11 @@ function info() {
     alert("top 50 used tags on superuser.com (year 2016)\n\n" +
 
           "Count: How often a tag was used. \n" +
-          "Comments: How many comments a tag got. \n" +
-          "Answers: How many answers a tag got. \n" +
-          "Favorites: How many favorites a tag got. \n" +
-          "Score: The score a tag got. \n" +
-          "Views: How many views a tag got. \n" +
+          "Comments: In average how many comments a tag got. \n" +
+          "Answers: In average how many answers a tag got. \n" +
+          "Favorites: In average how many favorites a tag got. \n" +
+          "Score: The average score a tag got. \n" +
+          "Views: In average how many views a tag got. \n" +
 
           "\nand how often they appear with each other.");
 }

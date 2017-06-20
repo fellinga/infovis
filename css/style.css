@@ -16,11 +16,16 @@ header,footer {
     background-color:#333;
     color: #aaa;
 }
+header {
+    text-align: center;
+    align-content: center;
+}
 #title {
     float: left;
     line-height: 64px;
     font-size: 22px;
-    padding: 0 20px;
+    padding: 0 450px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 #info {
     float: right;
@@ -37,11 +42,14 @@ section.chartSection {
     margin: 0;
     display: inline-block;
 }
+#btnBar {
+    padding-top: 10px;
+}
 button {
     color: black;
     height: 30px;
     line-height: 30px;
-    background-color: greenyellow;
+    background-color: steelblue;
     border: none;
     cursor: pointer;
 }
@@ -58,10 +66,10 @@ button:disabled {
     stroke: #ccc;
 }
 circle,.bar {
-    fill: greenyellow;
+    fill: steelblue;
 }
 circle.circle {
-    fill: greenyellow;
+    fill: steelblue;
 }
 circle.selected {
     fill: orange;
@@ -76,7 +84,7 @@ circle:hover {
     stroke: black;
 }
 rect.bar {
-    fill: greenyellow;
+    fill: steelblue;
 }
 rect.selected {
     fill: orange;
@@ -106,4 +114,12 @@ div.tooltip {
     border: 0px;        
     border-radius: 8px;         
     pointer-events: none;           
+}
+.grid line {
+  stroke: white;
+  shape-rendering: crispEdges;
+}
+
+.grid path {
+  stroke-width: 0;
 }
