@@ -39,20 +39,18 @@ d3.json(pathToData, function(dataFromServer) {
             .on('mouseleave', function (d) { if (d.id != selectedTag) hoverNode('')})
             .attr("x", function(d) { return x(d.id); })
             .attr("width", x.bandwidth())
+            .attr("y", function(d) { return y(d.count); })
             .transition()
             .duration(1800)
-            .attr("y", function(d) { return y(d.count); })
             .attr("height", function(d) { return height - y(d.count); });
 
         // add the x Axis
         svg.append("g")
             .transition()
-            .duration(900)
+            .duration(1800)
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x))
-                .transition()
-                .duration(900)
                 .selectAll("text")
                     .attr("y", 0)
                     .attr("x", 9)
