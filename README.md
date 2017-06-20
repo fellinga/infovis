@@ -18,4 +18,5 @@ and how often they appear with each other.
 
 
 Live site: https://fellinga.github.io/infovis/
+
 Final Report @ https://fellinga.github.io/infovis/presentations/final/finalreport.html
