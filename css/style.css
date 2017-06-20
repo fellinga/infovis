@@ -50,6 +50,7 @@ button:hover {
 }
 button:disabled {
     background-color: #ccc;
+    cursor: not-allowed;
 }
 
 /* chart relevant code starts here */
