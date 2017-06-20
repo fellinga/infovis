@@ -22,7 +22,7 @@ var svg = d3.select("#barChart").append("svg")
     .attr("transform", 
         "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("data/graph_data_50.json", function(dataFromServer) {
+d3.json("data/superuser_tagdata_top50.json", function(dataFromServer) {
     jsondata = dataFromServer.nodes;
     jsondata.sort(function(a, b) { return b.count - a.count; });
     // default action -> count

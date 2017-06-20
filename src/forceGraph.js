@@ -21,7 +21,7 @@ function getMaxLinkValue() {
   return max;
 }
 
-d3.json("data/graph_data_50.json", function(error, graph) {
+d3.json("data/superuser_tagdata_top50.json", function(error, graph) {
   if (error) throw error;
   
   data = graph;
