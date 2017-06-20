@@ -310,10 +310,15 @@ function hoverNode(name) {
 
 // BUTTON UPDATE FUNCTION -> adjust circle radius
 function updateForceView() {
-  var div = 10;
+  var div = 0.001;
+
   // SINCE VIEW DATA IS TO LARGE WE NEED TO ADJUST
   if (selectedButton === "view") {
-    div = 800;
+    div = 1;
+  } else if (selectedButton === 'count') {
+    div = 10;
+  } else if (selectedButton === 'comment') {
+    div = 0.001*5;
   }
 
   d3.selectAll("circle")

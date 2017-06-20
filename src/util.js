@@ -30,11 +30,11 @@ function markButton(buttonID) {
 
 // RETURN THE RIGHT ATTRTIBUTE DEPENDING ON WHICH BUTTON IS ACTIVE
 function getRightAttribute(d) {
-    if (selectedButton === 'comment') return d.comment;
-    else if (selectedButton === 'answer')  return d.answer;
-    else if (selectedButton === 'favorite')  return d.fav;
-    else if (selectedButton === 'score')  return d.score;
-    else if (selectedButton === 'view')  return d.view;
+    if (selectedButton === 'comment') return d.comment/d.count;
+    else if (selectedButton === 'answer')  return d.answer/d.count;
+    else if (selectedButton === 'favorite')  return d.fav/d.count;
+    else if (selectedButton === 'score')  return d.score/d.count;
+    else if (selectedButton === 'view')  return d.view/d.count;
     else  return d.count;
 }
 
