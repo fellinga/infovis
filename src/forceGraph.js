@@ -1,10 +1,7 @@
 var data = null;
 var dataRec = null;
-
 var selectedTag = '';
-
 var maxLinkValue = 1;
-
 var shownNodes = null; //others are faded out
 
 const forceGraph = createForceGraph('#forceGraph');
@@ -33,9 +30,7 @@ d3.json("data/graph_data_50.json", function(error, graph) {
 
   maxLinkValue = getMaxLinkValue();
   
-
   //Create an array logging what is connected to what
-  
   dataRec.nodes.forEach(function (d) {
     linkedByIndex[d.id + "," + d.id] = 1;
   });
@@ -44,12 +39,6 @@ d3.json("data/graph_data_50.json", function(error, graph) {
       linkedByIndex[dataRec.links[i].source + "," + dataRec.links[i].target] = 1;
     }
   }
-  // dataRec.links.forEach(function (d) {
-  //     if (d.value > 50) {
-  //       linkedByIndex[d.source + "," + d.target] = 1;
-  //     }
-  // });
-
 
   filterGraphByTag();
   updateCharts();
@@ -59,8 +48,6 @@ d3.json("data/graph_data_50.json", function(error, graph) {
 function updateCharts() {
   forceGraph();
 }
-
-
 
 function createForceGraph(baseSelector) {
   const dims = {
@@ -82,14 +69,12 @@ function createForceGraph(baseSelector) {
   const svg = d3.select(baseSelector).append('svg')
     .attr('width', dims.width + dims.margin*2)
     .attr('height', dims.height + dims.margin*2 + 70);
-    
 
-    //create a root shifted element
+  //create a root shifted element
   const root = svg.append('g').attr('transform', `translate(${dims.margin},${dims.margin})`);
   root.append('g').attr('class', 'links');
   root.append('g').attr("class", "nodes");
   
-
   manyBody = d3.forceManyBody();
   manyBody.strength(-30);
   // manyBody.distanceMin(10);
@@ -104,12 +89,10 @@ function createForceGraph(baseSelector) {
    .force('collide', collide)
    .force("center", d3.forceCenter(dims.width / 2, dims.height / 2));
 
-
   function update() {
     svg.on('dbclick', setBack);
 
     // LINKS
-
     const links = root.select("g.links")
       .selectAll("line")
       .data(data.links);
@@ -212,13 +195,9 @@ function createForceGraph(baseSelector) {
 
     nodes.exit().remove();
 
-
-    
-
     simulation
         .force("link")
         .links(data.links);
-
 
     // set collision radius for every circle depending on selected button/node value
     simulation.force('collide').radius(function(d) {
@@ -248,7 +227,6 @@ function createForceGraph(baseSelector) {
     }
 
     function circleClicked(d) {
-
       selectedTag = d.id;
       selectBar(selectedTag);    // function located at barChart.js
 
@@ -259,14 +237,10 @@ function createForceGraph(baseSelector) {
       filterGraphByTag();
       updateCharts();
 
-      
-      manyBody.strength(-30);
-
-      
+      manyBody.strength(-30);      
     }
 
     function connectedNodes(me) {
-      
       //Reduce the opacity of all but the neighbouring nodes
       d = d3.select(me).node().__data__;
       nodes_update.style("opacity", function (o) {
@@ -275,7 +249,6 @@ function createForceGraph(baseSelector) {
     }
 
     function setBack() {
-
       //Put them back to opacity=1
       nodes_update.style("opacity", 1);
       links_update.style("opacity", 1);
@@ -298,13 +271,7 @@ function createForceGraph(baseSelector) {
       d.fx = null;
       d.fy = null;
     }
-
-    
-
-  
 }
-
-
   return update;
 }
 
@@ -322,12 +289,10 @@ function filterGraphByTag() {
   }
 }
 
-
 //This function looks up whether a pair are neighbours  
 function neighboring(a, b) {
     return linkedByIndex[a + "," + b];
 }
-
 
 function selectNode(name) {
   if (name === "" || name === null) {
@@ -344,7 +309,11 @@ function selectNode(name) {
 }
 
 function hoverNode(name) {
-  d3.selectAll('circle')
+  d3.selectAll('.circle')
+        .attr('class',function(d) { 
+            return d.id == name ? 'hover' : 'circle'
+        });
+  d3.selectAll('.hover')
         .attr('class',function(d) { 
             return d.id == name ? 'hover' : 'circle'
         });
