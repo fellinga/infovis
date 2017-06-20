@@ -19,10 +19,9 @@ var svg = d3.select("#barChart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", 
-        "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json("data/superuser_tagdata_top50.json", function(dataFromServer) {
+d3.json(pathToData, function(dataFromServer) {
     jsondata = dataFromServer.nodes;
     function draw() {
         jsondata.sort(function(a, b) { return b.count - a.count; });
@@ -92,123 +91,33 @@ function hoverBar(name) {
 }
 
 // BUTTON UPDATE FUNCTIONS START HERE
-function barCountBtn() {
-    jsondata.sort(function(a, b) { return b.count - a.count; });
+function updateBarView() {
+    jsondata.sort(function(a, b) { return getRightAttribute(b) - getRightAttribute(a); });
     // Scale the range of the data in the domains
     x.domain(jsondata.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata, function(d) { return d.count; })]);
+    y.domain([0, d3.max(jsondata, function(d) { return getRightAttribute(d) ; })]);
 
     // append the rectangles for the bar chart
     svg.selectAll("rect")
         .attr("x", function(d) { return x(d.id); })
         .transition()
         .duration(1800)
-        .attr("y", function(d) { return y(d.count); })
-        .attr("height", function(d) { return height - y(d.count); }
+        .attr("y", function(d) { return y(getRightAttribute(d)); })
+        .attr("height", function(d) { return height - y(getRightAttribute(d)); }
     );
 
-    changeYAxis();  
-    changeXAxis(); 
-}
-function barCommentBtn() {
-    jsondata.sort(function(a, b) { return b.comment - a.comment; });
-    // Scale the range of the data in the domains
-    x.domain(jsondata.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata, function(d) { return d.comment; })]);
-
-    // append the rectangles for the bar chart
-    svg.selectAll("rect")
-        .attr("x", function(d) { return x(d.id); })
-        .transition()
-        .duration(1800)
-        .attr("y", function(d) { return y(d.comment); })
-        .attr("height", function(d) { return height - y(d.comment); }
-    );
-
-    changeYAxis();  
-    changeXAxis();
-}
-function barAnswerBtn() {
-    jsondata.sort(function(a, b) { return b.answer - a.answer; });
-    // Scale the range of the data in the domains
-    x.domain(jsondata.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata, function(d) { return d.answer; })]);
-
-    // append the rectangles for the bar chart
-    svg.selectAll("rect")
-        .attr("x", function(d) { return x(d.id); })
-        .transition()
-        .duration(1800)
-        .attr("y", function(d) { return y(d.answer); })
-        .attr("height", function(d) { return height - y(d.answer); }
-    );
-
-    changeYAxis();  
-    changeXAxis(); 
-}
-function barFavoriteBtn() {
-    jsondata.sort(function(a, b) { return b.fav - a.fav; });
-    // Scale the range of the data in the domains
-    x.domain(jsondata.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata, function(d) { return d.fav; })]);
-
-    // append the rectangles for the bar chart
-    svg.selectAll("rect")
-        .attr("x", function(d) { return x(d.id); })
-        .transition()
-        .duration(1800)
-        .attr("y", function(d) { return y(d.fav); })
-        .attr("height", function(d) { return height - y(d.fav); }
-    );
-
-    changeYAxis();
-    changeXAxis();   
-}
-function barScoreBtn() {
-    jsondata.sort(function(a, b) { return b.score - a.score; });
-    // Scale the range of the data in the domains
-    x.domain(jsondata.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata, function(d) { return d.score; })]);
-
-    // append the rectangles for the bar chart
-    svg.selectAll("rect")
-        .attr("x", function(d) { return x(d.id); })
-        .transition()
-        .duration(1800)
-        .attr("y", function(d) { return y(d.score); })
-        .attr("height", function(d) { return height - y(d.score); }
-    );
-
-    changeYAxis(); 
-    changeXAxis(); 
-}
-function barViewBtn() {
-    jsondata.sort(function(a, b) { return b.view - a.view; });
-    // Scale the range of the data in the domains
-    x.domain(jsondata.map(function(d) { return d.id; }));
-    y.domain([0, d3.max(jsondata, function(d) { return d.view; })]);
-
-    // append the rectangles for the bar chart
-    svg.selectAll("rect")
-        .attr("x", function(d) { return x(d.id); })
-        .transition()
-        .duration(1800)
-        .attr("y", function(d) { return y(d.view); })
-        .attr("height", function(d) { return height - y(d.view); }
-    );
-
-    changeYAxis();
-    changeXAxis();
+    updateYAxis();  
+    updateXAxis();
 }
 
-function changeYAxis() {
+function updateYAxis() {
     svg.select(".y.axis")
         .transition()
         .duration(1800)
     .call(d3.axisLeft(y));   
 }
 
-function changeXAxis() {
+function updateXAxis() {
     svg.select(".x.axis")
         .transition()
         .duration(900)

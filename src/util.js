@@ -1,3 +1,20 @@
+// DATA LOCATION
+var pathToData = "data/superuser_tagdata_top50.json";
+// DEFAULT VIEW: COUNT
+var selectedButton = 'count';
+markButton(selectedButton);
+
+// BUTTON HANDLER
+function updateViews(element) {
+    markButton(element.id);
+    updateBarView();        // function located at barChart.js
+    updateForceView();      // function located at forceGraph.js
+}
+function deselect() {
+    selectBar("");          // function located at barChart.js
+    selectNode("");         // function located at forceGraph.js
+}
+
 // HIGHLIGHT THE ACTIVE BUTTON
 function markButton(buttonID) {
     d3.selectAll("button")
@@ -5,42 +22,18 @@ function markButton(buttonID) {
 
     d3.select("#" + buttonID)
         .attr('disabled', true);
+
+    selectedButton = buttonID;
 }
 
-// BUTTON HANDLER
-function countBtn() {
-    barCountBtn();          // function located at barChart.js
-    forceCountBtn();        // function located at forceGraph.js
-    markButton("count");
-}
-function commentBtn() {
-    barCommentBtn();        // function located at barChart.js
-    forceCommentBtn();      // function located at forceGraph.js
-    markButton("comment");
-}
-function answerBtn() {
-    barAnswerBtn();         // function located at barChart.js
-    forceAnswerBtn();       // function located at forceGraph.js
-    markButton("answer");
-}
-function favoriteBtn() {
-    barFavoriteBtn();       // function located at barChart.js
-    forceFavoriteBtn();     // function located at forceGraph.js
-    markButton("favorite");
-}  
-function scoreBtn() {
-    barScoreBtn();          // function located at barChart.js
-    forceScoreBtn();        // function located at forceGraph.js
-    markButton("score");
-}
-function viewBtn() {
-    barViewBtn();           // function located at barChart.js
-    forceViewBtn();         // function located at forceGraph.js
-    markButton("view");
-}
-function deselect() {
-    selectBar("");          // function located at barChart.js
-    selectNode("");         // function located at forceGraph.js
+// RETURN THE RIGHT ATTRTIBUTE DEPENDING ON WHICH BUTTON IS ACTIVE
+function getRightAttribute(d) {
+    if (selectedButton === 'comment') return d.comment;
+    else if (selectedButton === 'answer')  return d.answer;
+    else if (selectedButton === 'favorite')  return d.fav;
+    else if (selectedButton === 'score')  return d.score;
+    else if (selectedButton === 'view')  return d.view;
+    else  return d.count;
 }
 
 // CHART INFORMATION BUTTON

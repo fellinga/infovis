@@ -9,7 +9,6 @@ const forceGraph = createForceGraph('#forceGraph');
 //Toggle stores whether the highlighting is on
 var toggle = 0;
 var linkedByIndex = {};
-var selectedButton = 'cou'; //default: cou(nt)
 
 function getMaxLinkValue() {
   max = 1;
@@ -21,7 +20,7 @@ function getMaxLinkValue() {
   return max;
 }
 
-d3.json("data/superuser_tagdata_top50.json", function(error, graph) {
+d3.json(pathToData, function(error, graph) {
   if (error) throw error;
   
   data = graph;
@@ -159,15 +158,6 @@ function createForceGraph(baseSelector) {
       nodes_update.style('opacity', 1);
     }
 
-    function getRightAttribute(d) {
-      if (selectedButton === 'com') return d.comment;
-      else if (selectedButton === 'a')  return d.answer;
-      else if (selectedButton === 'f')  return d.fav;
-      else if (selectedButton === 's')  return d.score;
-      else if (selectedButton === 'v')  return d.view;
-      else  return d.count;
-    }
-
     // Tooltip
     nodes_update.selectAll('circle')
       .on('mouseenter', function(d) {
@@ -201,7 +191,7 @@ function createForceGraph(baseSelector) {
 
     // set collision radius for every circle depending on selected button/node value
     simulation.force('collide').radius(function(d) {
-      if (selectedButton === 'v') {
+      if (selectedButton === 'view') {
         return Math.sqrt(getRightAttribute(d)/500);
       } else {
         return Math.sqrt(getRightAttribute(d)/5);
@@ -319,50 +309,15 @@ function hoverNode(name) {
         });
 }
 
-function forceCountBtn() {
-  selectedButton = 'cou';
-  d3.selectAll("circle")
-    .transition()
-    .duration(1800)
-    .attr('r', (d) => Math.sqrt(d.count/10));
-}
+function updateForceView() {
+  var div = 10;
+  // SINCE VIEW DATA IS TO LARGE WE NEED TO ADJUST
+  if (selectedButton === "view") {
+    div = 800;
+  }
 
-function forceCommentBtn() {
-  selectedButton = 'com';
   d3.selectAll("circle")
     .transition()
     .duration(1800)
-    .attr('r', (d) => Math.sqrt(d.comment/10));
-}
-
-function forceAnswerBtn() {
-  selectedButton = 'a';
-  d3.selectAll("circle")
-    .transition()
-    .duration(1800)
-    .attr('r', (d) => Math.sqrt(d.answer/10));
-}
-
-function forceFavoriteBtn() {
-  selectedButton = 'f';
-  d3.selectAll("circle")
-    .transition()
-    .duration(1800)
-    .attr('r', (d) => Math.sqrt(d.fav/10));
-}
-
-function forceScoreBtn() {
-  selectedButton = 's';
-  d3.selectAll("circle")
-    .transition()
-    .duration(1800)
-    .attr('r', (d) => Math.sqrt(d.score/10));
-}
-
-function forceViewBtn() {
-  selectedButton = 'v';
-  d3.selectAll("circle")
-    .transition()
-    .duration(1800)
-    .attr('r', (d) => Math.sqrt(d.view/800));
+    .attr('r', (d) => Math.sqrt(getRightAttribute(d)/div));
 }

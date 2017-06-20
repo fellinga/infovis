@@ -24,12 +24,12 @@
 
 	<main>
 		<section id="btnBar">
-			<button id="count" onclick="countBtn()" disabled> Count </button>
-			<button id="comment" onclick="commentBtn()"> Comments </button>
-			<button id="answer" onclick="answerBtn()"> Answers </button>
-			<button id="favorite" onclick="favoriteBtn()"> Favorites </button>
-			<button id="score" onclick="scoreBtn()"> Score </button>
-			<button id="view" onclick="viewBtn()"> Views </button>
+			<button id="count" onclick="updateViews(this)"> Count </button>
+			<button id="comment" onclick="updateViews(this)"> Comments </button>
+			<button id="answer" onclick="updateViews(this)"> Answers </button>
+			<button id="favorite" onclick="updateViews(this)"> Favorites </button>
+			<button id="score" onclick="updateViews(this)"> Score </button>
+			<button id="view" onclick="updateViews(this)"> Views </button>
 			<button onclick="deselect()" style="background-color:lightblue"> Deselect </button>
 		</section>
         <section class="chartSection">
