@@ -284,7 +284,12 @@ function filterGraphByTag() {
 
 // HIGHLIGHTING FUNCTION WHEN A NODE IS SELECTED
 function selectNode(object) {
-  if (object.id === null || object.id === "") {
+  if (object == "") {
+        d3.selectAll(".node")
+            .transition()
+            .duration(1000)
+            .style("opacity", 1 );
+
         selectedTag = '';
         toggle = 1;
         filterGraphByTag();
@@ -292,9 +297,17 @@ function selectNode(object) {
         toggle = 0;
         return;
   }
+
   selectedTag = object.id;
   filterGraphByTag();
   updateCharts();
+
+  d3.selectAll(".node")
+      .transition()
+      .duration(1000)
+      .style("opacity", function (o) {
+        return neighboring(object.id, o.id) | neighboring(o.id, object.id) ? 1 : lightOpacity
+      });
 }
 // HIGHLIGHTING FUNCTION WHEN A NODE IS HOVERED
 function hoverNode(name) {
