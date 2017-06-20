@@ -121,10 +121,10 @@ function updateBarView() {
     // append the rectangles for the bar chart
     svg.selectAll("rect")
         .transition()
-        .duration(1800)
+        .duration(900)
         .attr("x", function(d) { return x(d.id); })
         .transition()
-        .duration(1800)
+        .duration(900)
         .attr("y", function(d) { return y(getRightAttribute(d)); })
         .attr("height", function(d) { return height - y(getRightAttribute(d)); }
     );
